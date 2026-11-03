@@ -1,51 +1,61 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="icon" href="cb-logo.jpg"><title>Coffeebreak Listen &amp; Promote</title>
 <meta name="description" content="Listen to Coffeebreak music, share it and earn Coffeebreak Points toward a monthly share of real app earnings.">
 <style>
-*{box-sizing:border-box}html,body{margin:0;background:#ffe4ef;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:#4a1030}
-#app{max-width:400px;margin:0 auto;min-height:720px;background:#fff5f9;box-shadow:0 0 20px #e0608a33}
-header{background:linear-gradient(135deg,#ff6fa5,#d6286f);color:#fff;padding:12px 12px 10px;display:flex;align-items:center;gap:10px}
-header img{width:52px;height:52px;border-radius:50%;border:3px solid #fff;object-fit:cover}
-header h1{font-size:19px;margin:0;line-height:1.1}header small{font-size:11.5px;opacity:.95}
-.pts{margin-left:auto;text-align:center;background:#fff;color:#d6286f;border-radius:14px;padding:5px 9px;font-weight:800;font-size:18px;min-width:70px}.pts span{display:block;font-size:10px;font-weight:600}
-.demo{background:#fff0b3;color:#6b4a00;font-size:12px;padding:6px 10px;text-align:center}.demo a{color:#b0004f;font-weight:700}
-nav{display:flex;background:#ffd0e2;position:sticky;top:0;z-index:5}nav button{flex:1;border:0;background:none;padding:10px 2px;font-size:13px;font-weight:700;color:#8a2050;cursor:pointer}nav button.on{background:#fff5f9;color:#d6286f;border-bottom:3px solid #d6286f}
-section{display:none;padding:12px}section.on{display:block}
-.card{background:#fff;border-radius:14px;padding:12px;margin-bottom:10px;box-shadow:0 2px 8px #d6286f1f}
-h2{font-size:16px;margin:0 0 8px;color:#c2185b}h3{font-size:14px;margin:8px 0 4px;color:#c2185b}p,li{font-size:13.5px;line-height:1.4}
-.song{display:flex;align-items:center;gap:8px;padding:8px;border-radius:10px;background:#fff0f6;margin-bottom:6px}.song.on{background:#ffc2da}.song b{font-size:13.5px;display:block}.song small{font-size:11px;color:#8a2050}
-.song button{margin-left:auto}
-.btn{border:0;border-radius:20px;background:#e91e63;color:#fff;font-weight:700;padding:8px 14px;font-size:13.5px;cursor:pointer;text-decoration:none;display:inline-block;text-align:center}.btn.alt{background:#fff;color:#d6286f;border:2px solid #e91e63}.btn.sm{padding:6px 10px;font-size:12px}.btn:disabled{opacity:.45}
-.player{position:relative}.bar{height:10px;background:#ffd0e2;border-radius:6px;overflow:hidden;margin:8px 0}.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#ff6fa5,#d6286f)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;background:#0d0408;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:#fff}
+#app{max-width:400px;margin:0 auto;min-height:720px;background:linear-gradient(180deg,#7a1747 0,#2a0b1b 260px,#140610 520px);padding-bottom:140px}
+a{color:#ff8cc0}
+header{padding:14px 14px 6px;display:flex;align-items:center;gap:10px}
+header img{width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid #ff4fa0}
+header h1{font-size:21px;margin:0;font-weight:800;letter-spacing:-.3px}header small{font-size:11.5px;color:#f5c2d8}
+.pts{margin-left:auto;text-align:center;background:#ff4fa0;color:#fff;border-radius:20px;padding:4px 11px;font-weight:800;font-size:16px}.pts span{display:block;font-size:9px;font-weight:700;letter-spacing:1px}
+.demo{background:#ffd6e8;color:#5a0a30;font-size:12px;padding:6px 10px;text-align:center;margin:4px 12px;border-radius:8px}.demo a{color:#b0004f;font-weight:800}
+section{display:none;padding:6px 14px}section.on{display:block}
+.chips{display:flex;gap:8px;margin:6px 0 10px;overflow-x:auto}.chips span{background:#ffffff1f;border-radius:16px;padding:6px 12px;font-size:12.5px;white-space:nowrap;cursor:pointer}.chips span.on{background:#ff4fa0}
+.hero{display:flex;gap:12px;align-items:flex-end;margin:4px 0 10px}.art{border-radius:6px;display:flex;align-items:center;justify-content:center;flex:none;background:linear-gradient(135deg,#ff6fa5,#8b1d55);box-shadow:0 6px 18px #0008;overflow:hidden}.art img{width:62%;border-radius:50%}
+.hero .art{width:120px;height:120px}.hero h2{font-size:22px;margin:0 0 4px;font-weight:900}.hero p{margin:0;font-size:12px;color:#f5c2d8}
+.ctl{display:flex;align-items:center;gap:14px;margin:6px 0 10px}.big{width:54px;height:54px;border-radius:50%;border:0;background:#ff4fa0;color:#fff;font-size:22px;cursor:pointer;box-shadow:0 4px 12px #ff4fa066;margin-left:auto}.ic{background:none;border:0;color:#f5c2d8;font-size:20px;cursor:pointer}.ic.on{color:#ff4fa0}
+#q{width:100%;background:#ffffff1a;border:0;border-radius:6px;color:#fff;padding:9px 10px;font:inherit;font-size:13px;margin-bottom:6px}#q::placeholder{color:#e9a9c6}
+.song{display:flex;align-items:center;gap:10px;padding:7px 4px;border-radius:6px;cursor:pointer}.song:hover{background:#ffffff12}.song .n{width:16px;text-align:center;color:#d9a3bd;font-size:13px}.song .art{width:42px;height:42px;border-radius:4px}.song b{font-size:14px;display:block;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px}.song small{font-size:11.5px;color:#d9a3bd}.song.on b,.song.on .n{color:#ff4fa0}.song .d{margin-left:auto;font-size:11.5px;color:#d9a3bd;text-align:right}
+.card{background:#ffffff12;border-radius:10px;padding:12px;margin-bottom:10px}
+h2{font-size:17px;margin:4px 0 8px;font-weight:800}h3{font-size:14px;margin:8px 0 4px;color:#ff8cc0}p,li{font-size:13.5px;line-height:1.4}
+.btn{border:0;border-radius:22px;background:#ff4fa0;color:#fff;font-weight:800;padding:9px 16px;font-size:13.5px;cursor:pointer;text-decoration:none;display:inline-block;text-align:center}.btn.alt{background:none;color:#fff;border:1px solid #f5c2d8}.btn.sm{padding:7px 12px;font-size:12px}
 .row{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
-.stat{display:grid;grid-template-columns:1fr 1fr;gap:6px}.stat div{background:#fff0f6;border-radius:10px;padding:8px;font-size:12px;text-align:center}.stat b{display:block;font-size:17px;color:#d6286f}
-textarea,input{width:100%;border:2px solid #ffb3d0;border-radius:10px;padding:8px;font:inherit;font-size:13px;background:#fff}
-.code{font-family:ui-monospace,monospace;font-size:20px;font-weight:800;color:#d6286f;letter-spacing:2px}
-.share{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:8px}.share a,.share button{font-size:12px;padding:8px 4px}
-.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#4a1030;color:#fff;padding:9px 16px;border-radius:20px;font-size:13px;opacity:0;transition:.3s;pointer-events:none;z-index:50;max-width:360px;text-align:center}.toast.on{opacity:1}
-.note{font-size:12px;color:#7a2a50;background:#fff0f6;border-left:4px solid #e91e63;padding:8px;border-radius:6px}
-.tier{display:flex;justify-content:space-between;align-items:center;padding:8px;border-radius:10px;background:#fff0f6;margin-bottom:6px;font-size:13px}.tier b{color:#c2185b}
-.goal{font-size:12.5px;padding:6px 8px;border-radius:8px;background:#fff0f6;margin-bottom:5px;display:flex;justify-content:space-between}.goal.done{background:#c8f7d4}
-footer{background:#4a1030;color:#ffe4ef;padding:14px 12px 10px;font-size:11.5px;text-align:center}footer a{color:#ffb3d0}
-.stream{display:grid;gap:8px;margin:12px 0 8px}.stream a{display:block;padding:15px;border-radius:16px;font-size:17px;font-weight:800;text-decoration:none;color:#fff;background:linear-gradient(135deg,#ff6fa5,#e91e63)}.stream a.ap{background:linear-gradient(135deg,#fb5c74,#c2185b)}.stream a.yt{background:linear-gradient(135deg,#ff4d4d,#b00020)}
-.sub{display:inline-block;font-size:11px;color:#ffb3d0;margin-top:6px}
-#tap{position:fixed;inset:0;background:#d6286fe6;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:99;cursor:pointer;text-align:center;padding:20px}#tap img{width:110px;border-radius:50%;border:4px solid #fff}#tap b{font-size:24px;margin:14px 0 6px}
+.stat{display:grid;grid-template-columns:1fr 1fr;gap:6px}.stat div{background:#ffffff14;border-radius:8px;padding:8px;font-size:12px;text-align:center;color:#f5c2d8}.stat b{display:block;font-size:18px;color:#fff}
+textarea,input,select{width:100%;border:0;border-radius:6px;padding:9px;font:inherit;font-size:13px;background:#ffffff1f;color:#fff}select option{color:#000}
+.code{font-family:ui-monospace,monospace;font-size:22px;font-weight:800;color:#ff4fa0;letter-spacing:2px}
+.share{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:8px}.share a,.share button{font-size:12px;padding:9px 4px}
+.toast{position:fixed;left:50%;top:18px;transform:translateX(-50%);background:#ff4fa0;color:#fff;padding:9px 16px;border-radius:20px;font-size:13px;font-weight:700;opacity:0;transition:.3s;pointer-events:none;z-index:80;max-width:360px;text-align:center}.toast.on{opacity:1}
+.note{font-size:12px;color:#f5c2d8;background:#ffffff0f;border-left:3px solid #ff4fa0;padding:8px;border-radius:4px}
+.tier{display:flex;justify-content:space-between;align-items:center;padding:9px;border-radius:8px;background:#ffffff14;margin-bottom:6px;font-size:13px}.tier b{color:#ff8cc0}
+.goal{font-size:12.5px;padding:7px 9px;border-radius:6px;background:#ffffff12;margin-bottom:5px;display:flex;justify-content:space-between}.goal.done{background:#ff4fa040}
+#mini{position:fixed;left:50%;transform:translateX(-50%);bottom:62px;width:calc(100% - 16px);max-width:384px;background:#8b1d55;border-radius:8px;display:flex;align-items:center;gap:10px;padding:7px 8px 9px;z-index:30;cursor:pointer;box-shadow:0 4px 14px #0009}
+#mini .art{width:40px;height:40px;border-radius:4px}#mini b{font-size:13px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:220px}#mini small{font-size:11px;color:#f5c2d8}#mini .ic{margin-left:auto;color:#fff;font-size:24px}
+#mini .pb{position:absolute;left:8px;right:8px;bottom:3px;height:2px;background:#ffffff40;border-radius:2px}#mini .pb i{display:block;height:100%;width:0;background:#fff}
+nav{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:100%;max-width:400px;display:flex;background:linear-gradient(0deg,#0d0408 60%,#0d0408cc);z-index:31;padding:6px 0 8px}nav button{flex:1;border:0;background:none;color:#c98aa8;font-size:11px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px}nav button i{font-style:normal;font-size:19px}nav button.on{color:#fff}
+#np{position:fixed;inset:0;max-width:400px;margin:0 auto;background:linear-gradient(180deg,#b0255f,#3a0d24 60%,#140610);z-index:60;padding:16px 22px;display:none;flex-direction:column}#np.on{display:flex}
+#np .top{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:#f5c2d8;letter-spacing:1px}#np .art{width:100%;aspect-ratio:1;margin:22px 0 20px;border-radius:8px}#np h2{margin:0;font-size:22px}#np .by{color:#f5c2d8;font-size:14px}
+#np input[type=range]{width:100%;accent-color:#fff;padding:0;background:none;margin:14px 0 0}.times{display:flex;justify-content:space-between;font-size:11px;color:#f5c2d8}
+#np .pl{display:flex;justify-content:space-between;align-items:center;margin:10px 0}#np .pl .ic{font-size:26px;color:#fff}#np .pl .big{width:66px;height:66px;font-size:28px;margin:0;background:#fff;color:#8b1d55}
+#npInfo{display:block;text-align:center;font-size:12px;color:#ffd6e8;background:#ffffff1a;border-radius:16px;padding:6px}
+footer{color:#f5c2d8;padding:16px 14px 6px;font-size:11.5px;text-align:center}footer a{color:#ff8cc0}
+.stream{display:grid;gap:8px;margin:12px 0 8px}.stream a{display:block;padding:16px;border-radius:30px;font-size:17px;font-weight:900;text-decoration:none;color:#fff;background:linear-gradient(135deg,#ff6fa5,#e91e63)}.stream a.ap{background:linear-gradient(135deg,#fb5c74,#c2185b)}.stream a.yt{background:linear-gradient(135deg,#ff4d4d,#b00020)}
+.sub{display:inline-block;font-size:11px;color:#e9a9c6;margin:6px 0 4px}
+#tap{position:fixed;inset:0;background:#140610f2;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:99;cursor:pointer;text-align:center;padding:20px}#tap img{width:110px;border-radius:50%;border:4px solid #ff4fa0}#tap b{font-size:24px;margin:14px 0 6px}
 </style></head><body>
 <div id="tap"><img src="cb-logo.jpg" alt="Coffeebreak logo"><b>Tap for sound</b><div>Coffeebreak Listen &amp; Promote</div></div>
 <div id="app">
-<header><img src="cb-logo.jpg" alt="Coffeebreak logo"><div><h1>Listen &amp; Promote</h1><small>Coffeebreak music. Listen, share, earn points.</small></div><div class="pts"><b id="ptsN">0</b><span>POINTS</span></div></header>
-<div class="demo">Free demo: 3 songs, 5 counted listens a day. <a href="https://songwriterkaz.github.io/coffeebreak-hub/apps/listen-promote-full/" target="_blank" rel="noopener">Get the full app $5</a></div>
-<nav><button data-t="listen" class="on">🎧 Listen</button><button data-t="promote">📣 Promote</button><button data-t="pool">🏆 Pool</button><button data-t="support">💖 Support</button></nav>
-
+<header><img src="cb-logo.jpg" alt="Coffeebreak logo"><div><h1 id="greet">Listen &amp; Promote</h1><small>Coffeebreak music. Listen, share, earn points.</small></div><div class="pts"><b id="ptsN">0</b><span>POINTS</span></div></header>
+<div class="demo">Free demo: 4 songs, 5 counted listens a day. <a href="https://songwriterkaz.github.io/coffeebreak-hub/apps/listen-promote-full/" target="_blank" rel="noopener">Get the full app $5</a></div>
 <section id="listen" class="on">
-<div class="card player"><h2>Now playing</h2><div id="npT" style="font-weight:800">Pick a song below</div><div class="bar"><i id="npBar"></i></div>
-<div class="row"><button class="btn" id="playBtn">▶ Play</button><small id="npInfo" style="font-size:11.5px;color:#8a2050">Listen to the end to earn 10 points</small></div>
-<audio id="aud" preload="none"></audio></div>
-<div class="card"><h2>Coffeebreak songs</h2><div id="songs"></div>
-<p class="note">Points are only for full listens inside this app. Skipping ahead or muting doesn't count. Up to <b id="capL"></b> full listens a day earn points, and each song counts up to 3 times a day.</p></div>
-<div class="card"><h2>Today</h2><div class="stat"><div><b id="tL">0</b>full listens</div><div><b id="tS">0</b>shares</div><div><b id="tP">0</b>promo posts</div><div><b id="tI">0</b>friends invited</div></div></div>
-<div class="card"><h2>Goals</h2><div id="goals"></div></div>
+<div class="chips"><span class="on" data-f="">All</span><span data-f="coffee">Coffee</span><span data-f="sweet">Sweet treats</span><span data-f="drive">Road trip</span></div>
+<div class="hero"><div class="art"><img src="cb-logo.jpg" alt=""></div><div><h2>Coffeebreak Hits</h2><p>By Coffeebreak · Newcastle NSW</p><p id="listInfo"></p></div></div>
+<div class="ctl"><button class="ic" id="shufBtn" title="Shuffle">🔀</button><small style="font-size:11.5px;color:#f5c2d8">Full listens earn 10 points</small><button class="big" id="playBtn" aria-label="Play">▶</button></div>
+<input id="q" placeholder="🔍 Search Coffeebreak songs">
+<div id="songs"></div>
+<p class="note">Points are only for full listens inside this app. Skipping ahead or muting doesn't count. Up to <b id="capL"></b> full listens a day earn points, and each song counts up to 3 times a day.</p>
+<h2 style="margin-top:14px">Today</h2><div class="stat"><div><b id="tL">0</b>full listens</div><div><b id="tS">0</b>shares</div><div><b id="tP">0</b>promo posts</div><div><b id="tI">0</b>friends invited</div></div>
+<h2 style="margin-top:14px">Goals</h2><div id="goals"></div>
 </section>
-
 <section id="promote">
 <div class="card"><h2>Your referral code</h2><div class="code" id="myCode"></div><p style="margin:6px 0">Your personal link:</p><input id="myLink" readonly><div class="row" style="margin-top:6px"><button class="btn sm" id="copyLink">Copy link</button><button class="btn sm alt" id="nativeShare">Share…</button></div></div>
 <div class="card"><h2>Share a song (5 pts, up to 5 a day)</h2><select id="capSong" style="width:100%;padding:8px;border-radius:10px;border:2px solid #ffb3d0;font:inherit"></select>
@@ -73,24 +83,32 @@ footer{background:#4a1030;color:#ffe4ef;padding:14px 12px 10px;font-size:11.5px;
 <p class="note">Pay by PayID (Teachers Mutual Bank): darkokaz@gmx.com<br>Put your referral code <b class="mc"></b> in the payment description so Karen can thank you.</p>
 <button class="btn sm" id="copyPayid">Copy PayID</button></div>
 <div class="card"><h2>🎤 Promote your music too</h2><p>Are you an artist? Book a one-week <b>Featured Artist</b> spot in this app for <b>A$20</b>. Your song link shows on the Listen page for 7 days.</p><p class="note">Email Karen first with your song link. Your spot is booked once she says yes and you've paid by PayID (Teachers Mutual Bank): darkokaz@gmx.com. Clean songs only, and they must be your own music.</p><a class="btn sm" href="mailto:songwriterkaz@gmail.com?subject=Promote%20my%20music%20-%20Coffeebreak%20Listen%20%26%20Promote&body=Hi%20Karen%2C%0A%0AI'd%20like%20to%20book%20a%20Featured%20Artist%20week.%0AArtist%20name%3A%0ASong%20link%3A%0A">Email Karen to book</a></div>
-<div class="card"><h2>Get the full app · $5</h2><p>All 6 songs, 20 counted listens a day and saved progress on your device.</p><p class="note">Pay by PayID (Teachers Mutual Bank): darkokaz@gmx.com</p><a class="btn sm" href="https://songwriterkaz.github.io/coffeebreak-hub/apps/listen-promote-full/" target="_blank" rel="noopener">See the full app</a></div>
+<div class="card"><h2>Get the full app · $5</h2><p>All 17 Coffeebreak songs, 20 counted listens a day and saved progress on your device.</p><p class="note">Pay by PayID (Teachers Mutual Bank): darkokaz@gmx.com</p><a class="btn sm" href="https://songwriterkaz.github.io/coffeebreak-hub/apps/listen-promote-full/" target="_blank" rel="noopener">See the full app</a></div>
 <div class="card"><h2>More from Coffeebreak</h2><p>Coffeebreak songwriter and creator from Newcastle NSW.<br><a href="https://coffeebreaks.itch.io" target="_blank" rel="noopener">https://coffeebreaks.itch.io</a></p></div>
 </section>
 
 <footer>
-<p>&copy; Coffeebreak. Karen keeps all rights to this app, its music, characters, designs, name and logo. Buyers may resell physical items they bought but may not copy them. Coffeebreak claims no ownership of any third-party brands named (Spotify, YouTube, Apple Music, TikTok, Instagram, X, Facebook, WhatsApp, Tesla, Starlink). They belong to their owners and are named only for description.</p>
+<p>&copy; Coffeebreak. Karen keeps all rights to this app, its music, characters, designs, name and logo. Buyers may resell physical items they bought but may not copy them. Coffeebreak claims no ownership of any third-party brands named (Spotify, YouTube, Apple Music, TikTok, Instagram, X, Facebook, WhatsApp, Tesla, Starlink). They belong to their owners and are named only for description. This app is not made by, linked to or endorsed by Spotify or any streaming service.</p>
 <p>Pay by PayID (Teachers Mutual Bank): darkokaz@gmx.com</p>
 <p><a href="https://www.tesla.com" target="_blank" rel="noopener">Tesla</a> &middot; <a href="https://www.starlink.com" target="_blank" rel="noopener">Starlink</a></p>
 <div class="stream"><a href="https://open.spotify.com/artist/05R0I9sslP9GnbSg6KzEr7" target="_blank" rel="noopener">🎵 Stream my music on Spotify</a><a class="ap" href="https://music.apple.com/au/album/billionaire/1542958072" target="_blank" rel="noopener">🍎 Stream my music on Apple Music</a><a class="yt" href="https://www.youtube.com/@coffeebreakTVSERIES/streams" target="_blank" rel="noopener">📻 Coffeebreak Radio 24/7</a></div>
 <a class="sub" href="https://www.youtube.com/@coffeebreakTVSERIES?sub_confirmation=1" target="_blank" rel="noopener">▶ Subscribe to Coffeebreak TV Series on YouTube</a>
 </footer>
 </div>
+<div id="mini"><div class="art" id="miniArt"><img src="cb-logo.jpg" alt=""></div><div><b id="npT">Pick a song</b><small>Coffeebreak</small></div><button class="ic" id="miniBtn" aria-label="Play">▶</button><div class="pb"><i id="npBar"></i></div></div>
+<div id="np"><div class="top"><button class="ic" id="npClose" aria-label="Close">⌄</button><span>PLAYING FROM COFFEEBREAK HITS</span><span style="width:20px"></span></div>
+<div class="art" id="npArt"><img src="cb-logo.jpg" alt=""></div><h2 id="npT2">Pick a song</h2><div class="by">Coffeebreak</div>
+<input type="range" id="seek" min="0" max="1000" value="0"><div class="times"><span id="tCur">0:00</span><span id="tDur">0:00</span></div>
+<div class="pl"><button class="ic" id="npShuf">🔀</button><button class="ic" id="prevBtn">⏮</button><button class="big" id="npPlay">▶</button><button class="ic" id="nextBtn">⏭</button><button class="ic" id="npShare">↗</button></div>
+<small id="npInfo">Listen to the end to earn 10 points</small></div>
+<audio id="aud" preload="none"></audio>
+<nav><button data-t="listen" class="on"><i>🏠</i>Listen</button><button data-t="promote"><i>📣</i>Promote</button><button data-t="pool"><i>🏆</i>Pool</button><button data-t="support"><i>💖</i>Support</button></nav>
 <div class="toast" id="toast"></div>
 <script>
 var DEMO=/*DEMO*/true;
 var BASE="https://songwriterkaz.github.io/coffeebreak-hub/apps/listen-promote/";
-var ALL=[["01","Coffeebreak Love"],["26","Cinnamon Candy"],["27","Sweet Juices Cotton Candy"],["11","Coffee Break"],["21","Drip Drip Drip Country"],["05","Coffeebreak Love (Take 2)"]];
-var SONGS=DEMO?ALL.slice(0,3):ALL;
+var ALL=[["coffeebreak", "Coffeebreak", 128, "coffee"], ["coffeebreak-moments", "Coffeebreak Moments", 163, "coffee"], ["cinnamon-candy", "Cinnamon Candy", 28, "sweet"], ["coffee-break-ride", "Coffee Break Ride", 177, "drive"], ["sweet-juices-cotton-candy", "Sweet Juices Cotton Candy", 51, "sweet"], ["coffeebreak-grind", "Coffeebreak Grind", 91, "coffee"], ["coffeebreak-car", "Coffeebreak Car", 180, "drive"], ["a-delicious-disaster", "A Delicious Disaster", 105, "sweet"], ["drip-drip-drip-country", "Drip Drip Drip Country", 128, "drive"], ["coffee", "Coffee", 61, "coffee"], ["kicking-marshmallows", "Kicking Marshmallows Up the Mud", 174, "sweet"], ["restless-engine", "Restless Engine", 86, "drive"], ["coffeebreak-generator", "Coffeebreak Generator", 128, "coffee"], ["sugar-coated-fever", "Sugar-Coated Fever", 181, "sweet"], ["talk-is-cheap", "Talk Is Cheap", 106, "drive"], ["thunder-in-my-hands", "Thunder in My Hands", 51, "drive"], ["coffee-break", "Coffee Break", 212, "coffee"]];
+var SONGS=DEMO?ALL.slice(0,4):ALL;
 var CAP=DEMO?5:20,PER_SONG=3,SHARE_CAP=5,POST_CAP=3,INV_CAP=5;
 var $=function(i){return document.getElementById(i)};
 function today(){var d=new Date();return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()}
@@ -112,17 +130,35 @@ document.addEventListener("touchend",unlock,{passive:true});document.addEventLis
 // tabs
 [].forEach.call(document.querySelectorAll("nav button"),function(b){b.onclick=function(){[].forEach.call(document.querySelectorAll("nav button,section"),function(e){e.classList.remove("on")});b.classList.add("on");$(b.dataset.t).classList.add("on");render();scrollTo(0,0)}});
 // player with anti-skip
-var aud=$("aud"),cur=-1,heard=0,lastT=0,dur=0;
-function songList(){var h="";SONGS.forEach(function(s,i){var n=day().songs[s[0]]||0;h+='<div class="song'+(i===cur?" on":"")+'"><div><b>'+s[1]+'</b><small>Counted today: '+n+'/'+PER_SONG+'</small></div><button class="btn sm" data-i="'+i+'">'+(i===cur&&!aud.paused?"❚❚":"▶")+'</button></div>'});
-if(DEMO)h+='<div class="song"><div><b>+3 more songs</b><small>In the full app</small></div></div>';$("songs").innerHTML=h;
-[].forEach.call($("songs").querySelectorAll("button"),function(b){b.onclick=function(){pick(+b.dataset.i)}})}
-function pick(i){unlock();if(i===cur){aud.paused?aud.play():aud.pause();return}cur=i;heard=0;lastT=0;aud.src="songs/"+SONGS[i][0]+".mp3";aud.play().catch(function(){toast("Tap play again")});$("npT").textContent=SONGS[i][1];songList()}
-$("playBtn").onclick=function(){if(cur<0)pick(0);else{unlock();aud.paused?aud.play():aud.pause()}};
-aud.addEventListener("timeupdate",function(){var t=aud.currentTime,dt=t-lastT;if(dt>0&&dt<1.5&&!aud.muted&&aud.volume>0&&!document.hidden)heard+=dt;lastT=t;dur=aud.duration||0;if(dur)$("npBar").style.width=(t/dur*100)+"%";if(dur)$("npInfo").textContent="Listened "+Math.round(heard)+"s of "+Math.round(dur)+"s"});
+var aud=$("aud"),cur=-1,heard=0,lastT=0,dur=0,shuf=false,filt="",qq="";
+var COLORS=[["#ff6fa5","#8b1d55"],["#ff9a8b","#c2185b"],["#f48fb1","#6a1b4d"],["#ffb3d0","#d6286f"],["#e91e63","#4a1030"],["#ff80ab","#880e4f"]];
+function art(i){var c=COLORS[i%COLORS.length];return 'background:linear-gradient('+(45+i*37)+'deg,'+c[0]+','+c[1]+')'}
+function fmt(t){t=Math.max(0,Math.floor(t||0));return Math.floor(t/60)+":"+String(t%60).padStart(2,"0")}
+function visible(){return SONGS.map(function(s,i){return i}).filter(function(i){var s=SONGS[i];return(!filt||s[3]===filt)&&(!qq||s[1].toLowerCase().indexOf(qq)>=0)})}
+function songList(){var h="",v=visible();v.forEach(function(i,k){var s=SONGS[i],n=day().songs[s[0]]||0;h+='<div class="song'+(i===cur?" on":"")+'" data-i="'+i+'"><span class="n">'+(i===cur&&!aud.paused?"♪":k+1)+'</span><div class="art" style="'+art(i)+'"><img src="cb-logo.jpg" alt=""></div><div><b>'+s[1]+'</b><small>Coffeebreak · '+n+'/'+PER_SONG+' today</small></div><span class="d">'+fmt(s[2])+'</span></div>'});
+if(!v.length)h='<p style="color:#f5c2d8">No songs match.</p>';
+if(DEMO)h+='<div class="song" style="opacity:.6"><span class="n">+</span><div><b>'+(ALL.length-SONGS.length)+' more songs</b><small>In the full app</small></div></div>';$("songs").innerHTML=h;
+var tot=SONGS.reduce(function(a,s){return a+s[2]},0);$("listInfo").textContent=SONGS.length+" songs · "+Math.round(tot/60)+" min";
+[].forEach.call($("songs").querySelectorAll(".song[data-i]"),function(b){b.onclick=function(){pick(+b.dataset.i)}})}
+function setNow(){var i=cur;$("npT").textContent=$("npT2").textContent=SONGS[i][1];$("miniArt").style.cssText=$("npArt").style.cssText=art(i)}
+function pick(i){unlock();if(i===cur){aud.paused?aud.play():aud.pause();return}cur=i;heard=0;lastT=0;aud.src="songs/"+SONGS[i][0]+".mp3";aud.play().catch(function(){toast("Tap play again")});setNow();songList()}
+function next(d){var v=visible();if(!v.length)v=SONGS.map(function(s,i){return i});var n;if(shuf&&v.length>1){do{n=v[Math.floor(Math.random()*v.length)]}while(n===cur)}else{var k=v.indexOf(cur);n=v[((k<0?-1:k)+(d||1)+v.length)%v.length]}cur=-1;pick(n)}
+function toggle(){if(cur<0)next(1);else{unlock();aud.paused?aud.play():aud.pause()}}
+$("playBtn").onclick=$("npPlay").onclick=toggle;$("miniBtn").onclick=function(e){e.stopPropagation();toggle()};
+$("nextBtn").onclick=function(){next(1)};$("prevBtn").onclick=function(){if(aud.currentTime>3){aud.currentTime=0;lastT=0}else next(-1)};
+$("shufBtn").onclick=$("npShuf").onclick=function(){shuf=!shuf;$("shufBtn").classList.toggle("on",shuf);$("npShuf").classList.toggle("on",shuf);toast(shuf?"Shuffle on":"Shuffle off")};
+$("mini").onclick=function(){if(cur<0)next(1);$("np").classList.add("on")};$("npClose").onclick=function(){$("np").classList.remove("on")};
+$("npShare").onclick=function(){$("np").classList.remove("on");if(cur>=0)$("capSong").selectedIndex=cur;$("caption").value=caption();document.querySelector('nav button[data-t="promote"]').click()};
+$("seek").oninput=function(){if(aud.duration){aud.currentTime=this.value/1000*aud.duration;lastT=aud.currentTime}};
+$("q").oninput=function(){qq=this.value.trim().toLowerCase();songList()};
+[].forEach.call(document.querySelectorAll(".chips span"),function(c){c.onclick=function(){[].forEach.call(document.querySelectorAll(".chips span"),function(x){x.classList.remove("on")});c.classList.add("on");filt=c.dataset.f;songList()}});
+aud.addEventListener("timeupdate",function(){var t=aud.currentTime,dt=t-lastT;if(dt>0&&dt<1.5&&!aud.muted&&aud.volume>0&&!document.hidden)heard+=dt;lastT=t;dur=aud.duration||0;if(dur){var p=t/dur;$("npBar").style.width=(p*100)+"%";$("seek").value=Math.round(p*1000);$("tCur").textContent=fmt(t);$("tDur").textContent=fmt(dur);$("npInfo").textContent="Listened "+Math.round(heard)+"s of "+Math.round(dur)+"s · full listen = 10 points"}});
 aud.addEventListener("seeking",function(){lastT=aud.currentTime});
-aud.addEventListener("play",function(){$("playBtn").textContent="❚❚ Pause";songList()});aud.addEventListener("pause",function(){$("playBtn").textContent="▶ Play";songList()});
+function icons(p){$("playBtn").textContent=$("npPlay").textContent=$("miniBtn").textContent=p?"❚❚":"▶"}
+aud.addEventListener("play",function(){icons(1);songList()});aud.addEventListener("pause",function(){icons(0);songList()});
 aud.addEventListener("ended",function(){var d=day(),id=SONGS[cur][0];if(dur&&heard>=dur*0.9){if(d.l>=CAP)toast("Daily listen cap reached. Come back tomorrow");else if((d.songs[id]||0)>=PER_SONG)toast("This song has counted 3 times today. Try another");else{d.l++;d.songs[id]=(d.songs[id]||0)+1;add(10,"Full listen: "+SONGS[cur][1])}}else toast("Skipped parts don't count. Listen the whole way for points");
-heard=0;lastT=0;var n=(cur+1)%SONGS.length;cur=-1;pick(n)});
+heard=0;lastT=0;next(1)});
+var hr=new Date().getHours();$("greet").textContent=hr<12?"Good morning":hr<18?"Good afternoon":"Good evening";
 // goals
 var GOALS=[["Listen to 3 full songs today",function(){return day().l>=3}],["Share a song today",function(){return day().s>=1}],["Log a promo post today",function(){return day().p>=1}],["Invite a friend",function(){return S.friends.length>=1}],["Reach 100 points",function(){return S.total>=100}],["Reach 500 points",function(){return S.total>=500}],["Reach 1,000 points",function(){return S.total>=1000}]];
 // captions
