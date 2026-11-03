@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Coffeebreak Mail Live</title>
+<meta name="description" content="Coffeebreak Mail Live: real accounts and real mail between phones and computers, with outside email switching on once Coffeebreak's own domain is connected.">
+<meta name="theme-color" content="#ff2e93"><link rel="icon" href="cb-logo.jpg">
+<link rel="stylesheet" href="style.css">
+</head><body>
+<header class="top"><img src="cb-logo.jpg" alt="Coffeebreak logo"><h1>Coffeebreak Mail Live<small>Real mail on every device</small></h1><div id="who"></div></header>
+<main>
+<section id="v-auth" class="card">
+ <h2>Sign in or make your free account</h2>
+ <p class="muted">Your mail is kept safely on the Coffeebreak Mail server, so it shows up on any phone or computer you sign in on.</p>
+ <div class="seg"><button id="tSign" class="on">Sign in</button><button id="tNew">New account</button></div>
+ <div id="nameRow" class="hide"><label for="aName">Your name</label><input id="aName" autocomplete="name" maxlength="60"></div>
+ <label for="aHandle">Handle</label><input id="aHandle" autocomplete="username" placeholder="for example kaz.music" maxlength="30">
+ <label for="aPw">Password</label><input id="aPw" type="password" autocomplete="current-password" placeholder="at least 8 characters">
+ <button id="aGo" class="big">Sign in</button>
+ <div id="aMsg" class="msg"></div>
+</section>
+
+<section id="v-mail" class="hide">
+ <div id="statusBar" class="status"></div>
+ <div class="bigbtns"><button id="composeBtn" class="big">✉ Send</button><button id="receiveBtn" class="big alt">⟳ Receive</button></div>
+ <div id="recvMsg" class="muted center"></div>
+ <nav class="folders" id="folders"></nav>
+ <div class="mailgrid"><div id="list" class="list"></div><div id="reader" class="card reader"><p class="muted">Pick an email to read it.</p></div></div>
+</section>
+</main>
+
+<div class="modal hide" id="composeM"><div class="card">
+ <h2>Write email</h2>
+ <label for="cTo">To (Coffeebreak handles or any email addresses, comma separated)</label><input id="cTo" autocomplete="off">
+ <label for="cCc">Cc</label><input id="cCc" autocomplete="off">
+ <label for="cSubj">Subject</label><input id="cSubj" maxlength="300">
+ <label for="cBody">Message</label><textarea id="cBody"></textarea>
+ <div class="row"><button id="cSend" class="big">Send</button><button id="cClose" class="ghost">Close</button></div>
+ <div id="cMsg" class="msg"></div>
+</div></div>
+<div id="toast"></div>
+
+<section class="bottom-links">
+ <a class="yt" href="https://www.youtube.com/channel/UCNuPovMUFJDrl9fhztDgy4w?sub_confirmation=1" target="_blank" rel="noopener">&#9654; Subscribe to Coffeebreak TV Series on YouTube</a>
+ <a class="sp" href="https://open.spotify.com/artist/05R0I9sslP9GnbSg6KzEr7" target="_blank" rel="noopener">🎵 Stream my music</a>
+ <a class="ghostlink" href="https://coffeebreaks.itch.io/coffeebreak-mail-desk" target="_blank" rel="noopener">Open the original Coffeebreak Mail Desk</a>
+</section>
+<footer class="legal">
+ <p><img src="cb-logo.jpg" alt="Coffeebreak logo"><b>Coffeebreak Mail Live</b> by Coffeebreak. More apps, games and music at <a href="https://coffeebreaks.itch.io" target="_blank" rel="noopener">https://coffeebreaks.itch.io</a></p>
+ <p>About Coffeebreak: Coffeebreak is Karen, a songwriter and creator from Newcastle NSW. She makes apps, games, stores, tattoo flash and music under the Coffeebreak name.</p>
+ <p id="disclaimer">Disclaimer: Coffeebreak Mail Live is provided as is. Do not use it for emergencies or anything you cannot afford to lose. Outside sending is limited each day to stop spam. Rights: &copy; Karen (Coffeebreak). Karen keeps all rights to her products, designs, apps, songs, videos, name and logo. Buyers may resell physical items they bought but may not copy them or make their own versions.</p>
+ <p id="tmclause">Third-party brands: Karen claims no ownership of any third-party brands or trademarks named here, including Tesla, Starlink, YouTube, Spotify, Cloudflare, Netlify, Brevo and Resend, which belong to their owners and are named only for reference.</p>
+ <p class="links"><a href="https://www.tesla.com" target="_blank" rel="noopener">Tesla</a><a href="https://www.starlink.com" target="_blank" rel="noopener">Starlink</a></p>
+</footer>
+<script src="app.js"></script>
+</body></html>

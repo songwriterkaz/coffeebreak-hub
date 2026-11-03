@@ -1,0 +1,41 @@
+@font-face{font-family:Baloo;src:url(baloo2.woff) format("woff");font-weight:400 800;font-display:swap}
+:root{--p:#ff2e93;--p2:#ff7ac0;--bg:#ffe3f1;--ink:#4a0a2e;--soft:#ffd0e8;--line:#ffb3d6}
+*{box-sizing:border-box}html,body{margin:0}
+body{font-family:Baloo,"Arial Rounded MT Bold",system-ui,sans-serif;font-weight:600;background:var(--bg);color:var(--ink);font-size:17px;min-height:100vh}
+a{color:var(--p);font-weight:800}
+header.top{display:flex;align-items:center;gap:12px;padding:10px 16px;background:linear-gradient(100deg,var(--p),var(--p2));color:#fff;position:sticky;top:0;z-index:5;box-shadow:0 4px 18px rgba(255,46,147,.35)}
+header.top img{width:54px;height:54px;border-radius:50%;border:3px solid #fff;object-fit:cover}
+header.top h1{margin:0;font-size:28px;line-height:1}header.top small{display:block;font-size:14px;font-weight:600}
+#who{margin-left:auto;text-align:right;font-size:14px}#who button{margin-top:4px;padding:6px 12px;font-size:14px}
+main{max-width:1100px;margin:0 auto;padding:16px}
+.card{background:#fff;border:3px solid var(--line);border-radius:22px;padding:18px;box-shadow:0 6px 20px rgba(255,46,147,.12)}
+#v-auth{max-width:480px;margin:20px auto}
+label{display:block;margin:12px 0 4px;font-weight:800}
+input,textarea{width:100%;font:inherit;padding:12px;border:3px solid var(--line);border-radius:14px;background:#fff8fc;color:var(--ink)}
+textarea{min-height:200px;resize:vertical}
+button{font:inherit;font-weight:800;border:0;border-radius:999px;padding:11px 20px;background:var(--p);color:#fff;cursor:pointer;margin:6px 6px 0 0}
+button.alt{background:#fff;color:var(--p);border:3px solid var(--p)}button.ghost{background:var(--soft);color:var(--ink)}
+button.big{font-size:24px;padding:16px 30px;min-width:170px;min-height:64px}
+button:disabled{opacity:.5}
+.seg button{background:var(--soft);color:var(--ink)}.seg button.on{background:var(--p);color:#fff}
+.bigbtns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.center{text-align:center}.muted{opacity:.75;font-weight:500}.hide{display:none!important}
+.msg{margin-top:10px;font-weight:800}.msg.err{color:#c4004f}.msg.ok{color:#11804a}
+.status{background:#fff;border:3px dashed var(--line);border-radius:16px;padding:10px 14px;margin-bottom:12px;font-size:15px}
+.folders{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0}.folders button{background:var(--soft);color:var(--ink)}.folders button.on{background:var(--p);color:#fff}
+.mailgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:12px}
+@media (max-width:760px){.mailgrid{grid-template-columns:1fr}header.top h1{font-size:22px}button.big{font-size:20px;min-width:140px}}
+.list{display:flex;flex-direction:column;gap:8px}
+.msgi{background:#fff;border:3px solid var(--line);border-radius:16px;padding:10px 12px;cursor:pointer}
+.msgi.unread{border-color:var(--p);background:#fff0f8}.msgi b{display:block}.msgi .s{font-size:14px;opacity:.8}
+.reader .body{white-space:pre-wrap;word-wrap:break-word;margin-top:12px;font-weight:500}
+.tag{display:inline-block;font-size:12px;padding:2px 8px;border-radius:999px;background:var(--soft);margin-left:6px}
+.modal{position:fixed;inset:0;background:rgba(74,10,46,.45);display:flex;align-items:flex-start;justify-content:center;padding:20px;overflow:auto;z-index:10}
+.modal .card{width:100%;max-width:640px}
+#toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:12px 20px;border-radius:999px;opacity:0;transition:.3s;pointer-events:none;z-index:20;max-width:90vw;text-align:center}#toast.on{opacity:1}
+.bottom-links{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;padding:16px}
+.bottom-links a{display:inline-block;padding:9px 16px;border-radius:999px;text-decoration:none;color:#fff}
+.bottom-links .yt{background:#ff0000}.bottom-links .sp{background:#1db954}.bottom-links .ghostlink{background:var(--soft);color:var(--ink)}
+footer.legal{background:#fff;border-top:3px solid var(--line);padding:16px;font-size:14px;font-weight:500}
+footer.legal p{max-width:1100px;margin:8px auto}footer.legal img{width:28px;height:28px;border-radius:50%;vertical-align:middle;margin-right:6px}
+footer .links a{margin-right:16px}
