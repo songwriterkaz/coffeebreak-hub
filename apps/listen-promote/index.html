@@ -1,0 +1,159 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="icon" href="cb-logo.jpg"><title>Coffeebreak Listen &amp; Promote</title>
+<meta name="description" content="Listen to Coffeebreak music, share it and earn Coffeebreak Points toward a monthly share of real app earnings.">
+<style>
+*{box-sizing:border-box}html,body{margin:0;background:#ffe4ef;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:#4a1030}
+#app{max-width:400px;margin:0 auto;min-height:720px;background:#fff5f9;box-shadow:0 0 20px #e0608a33}
+header{background:linear-gradient(135deg,#ff6fa5,#d6286f);color:#fff;padding:12px 12px 10px;display:flex;align-items:center;gap:10px}
+header img{width:52px;height:52px;border-radius:50%;border:3px solid #fff;object-fit:cover}
+header h1{font-size:19px;margin:0;line-height:1.1}header small{font-size:11.5px;opacity:.95}
+.pts{margin-left:auto;text-align:center;background:#fff;color:#d6286f;border-radius:14px;padding:5px 9px;font-weight:800;font-size:18px;min-width:70px}.pts span{display:block;font-size:10px;font-weight:600}
+.demo{background:#fff0b3;color:#6b4a00;font-size:12px;padding:6px 10px;text-align:center}.demo a{color:#b0004f;font-weight:700}
+nav{display:flex;background:#ffd0e2;position:sticky;top:0;z-index:5}nav button{flex:1;border:0;background:none;padding:10px 2px;font-size:13px;font-weight:700;color:#8a2050;cursor:pointer}nav button.on{background:#fff5f9;color:#d6286f;border-bottom:3px solid #d6286f}
+section{display:none;padding:12px}section.on{display:block}
+.card{background:#fff;border-radius:14px;padding:12px;margin-bottom:10px;box-shadow:0 2px 8px #d6286f1f}
+h2{font-size:16px;margin:0 0 8px;color:#c2185b}h3{font-size:14px;margin:8px 0 4px;color:#c2185b}p,li{font-size:13.5px;line-height:1.4}
+.song{display:flex;align-items:center;gap:8px;padding:8px;border-radius:10px;background:#fff0f6;margin-bottom:6px}.song.on{background:#ffc2da}.song b{font-size:13.5px;display:block}.song small{font-size:11px;color:#8a2050}
+.song button{margin-left:auto}
+.btn{border:0;border-radius:20px;background:#e91e63;color:#fff;font-weight:700;padding:8px 14px;font-size:13.5px;cursor:pointer;text-decoration:none;display:inline-block;text-align:center}.btn.alt{background:#fff;color:#d6286f;border:2px solid #e91e63}.btn.sm{padding:6px 10px;font-size:12px}.btn:disabled{opacity:.45}
+.player{position:relative}.bar{height:10px;background:#ffd0e2;border-radius:6px;overflow:hidden;margin:8px 0}.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#ff6fa5,#d6286f)}
+.row{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.stat{display:grid;grid-template-columns:1fr 1fr;gap:6px}.stat div{background:#fff0f6;border-radius:10px;padding:8px;font-size:12px;text-align:center}.stat b{display:block;font-size:17px;color:#d6286f}
+textarea,input{width:100%;border:2px solid #ffb3d0;border-radius:10px;padding:8px;font:inherit;font-size:13px;background:#fff}
+.code{font-family:ui-monospace,monospace;font-size:20px;font-weight:800;color:#d6286f;letter-spacing:2px}
+.share{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:8px}.share a,.share button{font-size:12px;padding:8px 4px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#4a1030;color:#fff;padding:9px 16px;border-radius:20px;font-size:13px;opacity:0;transition:.3s;pointer-events:none;z-index:50;max-width:360px;text-align:center}.toast.on{opacity:1}
+.note{font-size:12px;color:#7a2a50;background:#fff0f6;border-left:4px solid #e91e63;padding:8px;border-radius:6px}
+.tier{display:flex;justify-content:space-between;align-items:center;padding:8px;border-radius:10px;background:#fff0f6;margin-bottom:6px;font-size:13px}.tier b{color:#c2185b}
+.goal{font-size:12.5px;padding:6px 8px;border-radius:8px;background:#fff0f6;margin-bottom:5px;display:flex;justify-content:space-between}.goal.done{background:#c8f7d4}
+footer{background:#4a1030;color:#ffe4ef;padding:14px 12px 10px;font-size:11.5px;text-align:center}footer a{color:#ffb3d0}
+.stream{display:grid;gap:8px;margin:12px 0 8px}.stream a{display:block;padding:15px;border-radius:16px;font-size:17px;font-weight:800;text-decoration:none;color:#fff;background:linear-gradient(135deg,#ff6fa5,#e91e63)}.stream a.ap{background:linear-gradient(135deg,#fb5c74,#c2185b)}.stream a.yt{background:linear-gradient(135deg,#ff4d4d,#b00020)}
+.sub{display:inline-block;font-size:11px;color:#ffb3d0;margin-top:6px}
+#tap{position:fixed;inset:0;background:#d6286fe6;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:99;cursor:pointer;text-align:center;padding:20px}#tap img{width:110px;border-radius:50%;border:4px solid #fff}#tap b{font-size:24px;margin:14px 0 6px}
+</style></head><body>
+<div id="tap"><img src="cb-logo.jpg" alt="Coffeebreak logo"><b>Tap for sound</b><div>Coffeebreak Listen &amp; Promote</div></div>
+<div id="app">
+<header><img src="cb-logo.jpg" alt="Coffeebreak logo"><div><h1>Listen &amp; Promote</h1><small>Coffeebreak music. Listen, share, earn points.</small></div><div class="pts"><b id="ptsN">0</b><span>POINTS</span></div></header>
+<div class="demo">Free demo: 3 songs, 5 counted listens a day. <a href="https://songwriterkaz.github.io/coffeebreak-hub/apps/listen-promote-full/" target="_blank" rel="noopener">Get the full app $5</a></div>
+<nav><button data-t="listen" class="on">🎧 Listen</button><button data-t="promote">📣 Promote</button><button data-t="pool">🏆 Pool</button><button data-t="support">💖 Support</button></nav>
+
+<section id="listen" class="on">
+<div class="card player"><h2>Now playing</h2><div id="npT" style="font-weight:800">Pick a song below</div><div class="bar"><i id="npBar"></i></div>
+<div class="row"><button class="btn" id="playBtn">▶ Play</button><small id="npInfo" style="font-size:11.5px;color:#8a2050">Listen to the end to earn 10 points</small></div>
+<audio id="aud" preload="none"></audio></div>
+<div class="card"><h2>Coffeebreak songs</h2><div id="songs"></div>
+<p class="note">Points are only for full listens inside this app. Skipping ahead or muting doesn't count. Up to <b id="capL"></b> full listens a day earn points, and each song counts up to 3 times a day.</p></div>
+<div class="card"><h2>Today</h2><div class="stat"><div><b id="tL">0</b>full listens</div><div><b id="tS">0</b>shares</div><div><b id="tP">0</b>promo posts</div><div><b id="tI">0</b>friends invited</div></div></div>
+<div class="card"><h2>Goals</h2><div id="goals"></div></div>
+</section>
+
+<section id="promote">
+<div class="card"><h2>Your referral code</h2><div class="code" id="myCode"></div><p style="margin:6px 0">Your personal link:</p><input id="myLink" readonly><div class="row" style="margin-top:6px"><button class="btn sm" id="copyLink">Copy link</button><button class="btn sm alt" id="nativeShare">Share…</button></div></div>
+<div class="card"><h2>Share a song (5 pts, up to 5 a day)</h2><select id="capSong" style="width:100%;padding:8px;border-radius:10px;border:2px solid #ffb3d0;font:inherit"></select>
+<h3>Copy-ready caption</h3><textarea id="caption" rows="5"></textarea><div class="row" style="margin-top:6px"><button class="btn sm" id="copyCap">Copy caption</button><button class="btn sm alt" id="newCap">New caption</button></div>
+<div class="share"><a class="btn" data-s="tiktok">TikTok</a><a class="btn" data-s="ig">Instagram</a><a class="btn" data-s="x">X</a><a class="btn" data-s="fb">Facebook</a><a class="btn" data-s="wa">WhatsApp</a><button class="btn alt" data-s="copy">Copy all</button></div>
+<p class="note">TikTok and Instagram don't take links from apps, so the caption is copied for you to paste into your post.</p></div>
+<div class="card"><h2>Log a promo post (15 pts, up to 3 a day)</h2><p>Posted about Coffeebreak music? Paste the post link. Karen checks posts before the monthly pool is shared.</p><input id="postUrl" placeholder="https://..."><div style="margin-top:6px"><button class="btn sm" id="logPost">Log my post</button></div><div id="postList" style="font-size:12px;margin-top:6px"></div></div>
+<div class="card"><h2>Invite friends (25 pts, up to 5 a day)</h2><p>Send your link. When a friend opens it, their app shows <b>Invited by</b> your code. Ask them for their code and add it here.</p><div id="invitedBy" class="note" style="display:none;margin-bottom:6px"></div><input id="friendCode" placeholder="Friend's code, e.g. CB-7K2Q"><div style="margin-top:6px"><button class="btn sm" id="addFriend">Add friend</button></div><div id="friendList" style="font-size:12px;margin-top:6px"></div></div>
+</section>
+
+<section id="pool">
+<div class="card"><h2>🏆 Monthly Promoter Pool</h2><p>Each month, <b>20% of real Coffeebreak Listen &amp; Promote app earnings</b> (app sales, supporter tiers, tips and artist promo slots), up to <b>AU$50</b>, is shared between the top 10 promoters, in proportion to their points.</p>
+<p class="note"><b>No earnings means no prize.</b> If the app earns nothing in a month, nothing is paid out. Points have no cash value on their own and can't be swapped or sold. They only count toward your share of the pool. This is not a job, there's no guaranteed income, and it isn't a lottery or game of chance. Entry is free and no purchase is needed.</p>
+<div class="stat" style="margin-top:8px"><div><b id="mPts">0</b>your points this month</div><div><b id="mDays">0</b>days left this month</div></div></div>
+<div class="card"><h2>Send your points to Karen</h2><p>At the end of the month, send your summary to Karen. She checks the listens, posts and invites, then pays the top promoters their share by bank transfer or PayID.</p><textarea id="summary" rows="6" readonly></textarea><div class="row" style="margin-top:6px"><button class="btn sm" id="copySum">Copy summary</button><a class="btn sm alt" id="mailSum">Email to Karen</a></div></div>
+<div class="card"><h2>Important</h2><p class="note">Points are only for plays inside this app. Coffeebreak never pays or rewards streams on Spotify, YouTube, Apple Music or any other platform, and you should never use bots, loops or fake accounts to stream anywhere. Please listen to Coffeebreak there just because you enjoy it.</p></div>
+</section>
+
+<section id="support">
+<div class="card"><h2>Support Coffeebreak</h2><p>Every dollar keeps Coffeebreak making music, and 20% (up to AU$50 a month) goes into the promoter pool.</p>
+<div class="tier"><span>☕ <b>Bean Supporter</b> · shout-out in the app news</span><b>A$3</b></div>
+<div class="tier"><span>🧁 <b>Latte Supporter</b> · your name on the Coffeebreak thanks list</span><b>A$10</b></div>
+<div class="tier"><span>👑 <b>Golden Mug</b> · a personal thank you song line</span><b>A$25</b></div>
+<div class="tier"><span>💝 <b>Tip jar</b> · any amount</span><b>Any</b></div>
+<p class="note">Pay by PayID (Teachers Mutual Bank): darkokaz@gmx.com<br>Put your referral code <b class="mc"></b> in the payment description so Karen can thank you.</p>
+<button class="btn sm" id="copyPayid">Copy PayID</button></div>
+<div class="card"><h2>🎤 Promote your music too</h2><p>Are you an artist? Book a one-week <b>Featured Artist</b> spot in this app for <b>A$20</b>. Your song link shows on the Listen page for 7 days.</p><p class="note">Email Karen first with your song link. Your spot is booked once she says yes and you've paid by PayID (Teachers Mutual Bank): darkokaz@gmx.com. Clean songs only, and they must be your own music.</p><a class="btn sm" href="mailto:songwriterkaz@gmail.com?subject=Promote%20my%20music%20-%20Coffeebreak%20Listen%20%26%20Promote&body=Hi%20Karen%2C%0A%0AI'd%20like%20to%20book%20a%20Featured%20Artist%20week.%0AArtist%20name%3A%0ASong%20link%3A%0A">Email Karen to book</a></div>
+<div class="card"><h2>Get the full app · $5</h2><p>All 6 songs, 20 counted listens a day and saved progress on your device.</p><p class="note">Pay by PayID (Teachers Mutual Bank): darkokaz@gmx.com</p><a class="btn sm" href="https://songwriterkaz.github.io/coffeebreak-hub/apps/listen-promote-full/" target="_blank" rel="noopener">See the full app</a></div>
+<div class="card"><h2>More from Coffeebreak</h2><p>Coffeebreak songwriter and creator from Newcastle NSW.<br><a href="https://coffeebreaks.itch.io" target="_blank" rel="noopener">https://coffeebreaks.itch.io</a></p></div>
+</section>
+
+<footer>
+<p>&copy; Coffeebreak. Karen keeps all rights to this app, its music, characters, designs, name and logo. Buyers may resell physical items they bought but may not copy them. Coffeebreak claims no ownership of any third-party brands named (Spotify, YouTube, Apple Music, TikTok, Instagram, X, Facebook, WhatsApp, Tesla, Starlink). They belong to their owners and are named only for description.</p>
+<p>Pay by PayID (Teachers Mutual Bank): darkokaz@gmx.com</p>
+<p><a href="https://www.tesla.com" target="_blank" rel="noopener">Tesla</a> &middot; <a href="https://www.starlink.com" target="_blank" rel="noopener">Starlink</a></p>
+<div class="stream"><a href="https://open.spotify.com/artist/05R0I9sslP9GnbSg6KzEr7" target="_blank" rel="noopener">🎵 Stream my music on Spotify</a><a class="ap" href="https://music.apple.com/au/album/billionaire/1542958072" target="_blank" rel="noopener">🍎 Stream my music on Apple Music</a><a class="yt" href="https://www.youtube.com/@coffeebreakTVSERIES/streams" target="_blank" rel="noopener">📻 Coffeebreak Radio 24/7</a></div>
+<a class="sub" href="https://www.youtube.com/@coffeebreakTVSERIES?sub_confirmation=1" target="_blank" rel="noopener">▶ Subscribe to Coffeebreak TV Series on YouTube</a>
+</footer>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+var DEMO=/*DEMO*/true;
+var BASE="https://songwriterkaz.github.io/coffeebreak-hub/apps/listen-promote/";
+var ALL=[["01","Coffeebreak Love"],["26","Cinnamon Candy"],["27","Sweet Juices Cotton Candy"],["11","Coffee Break"],["21","Drip Drip Drip Country"],["05","Coffeebreak Love (Take 2)"]];
+var SONGS=DEMO?ALL.slice(0,3):ALL;
+var CAP=DEMO?5:20,PER_SONG=3,SHARE_CAP=5,POST_CAP=3,INV_CAP=5;
+var $=function(i){return document.getElementById(i)};
+function today(){var d=new Date();return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()}
+function month(){var d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")}
+var K="cbListenPromote1",S;try{S=JSON.parse(localStorage.getItem(K))||{}}catch(e){S={}}
+if(!S.code){var c="ABCDEFGHJKMNPQRSTUVWXYZ23456789",x="CB-";for(var i=0;i<4;i++)x+=c[Math.floor(Math.random()*c.length)];S.code=x}
+S.total=S.total||0;S.months=S.months||{};S.posts=S.posts||[];S.friends=S.friends||[];S.log=S.log||[];
+function day(){if(S.day!==today()){S.day=today();S.d={l:0,s:0,p:0,i:0,songs:{}}}return S.d}
+day();
+try{var ref=new URLSearchParams(location.search).get("ref");if(ref&&/^CB-[A-Z0-9]{4}$/.test(ref)&&ref!==S.code&&!S.invitedBy)S.invitedBy=ref}catch(e){}
+function save(){try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}}
+function toast(t){var e=$("toast");e.textContent=t;e.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(function(){e.classList.remove("on")},2400)}
+function add(n,why){S.total+=n;var m=month();S.months[m]=(S.months[m]||0)+n;S.log.push([new Date().toISOString().slice(0,16),why,n]);if(S.log.length>300)S.log.shift();save();render();toast("+"+n+" points · "+why)}
+// iOS sound fix
+var actx;function unlock(){try{if(navigator.audioSession)navigator.audioSession.type="playback"}catch(e){}
+try{var AC=window.AudioContext||window.webkitAudioContext;if(AC){actx=actx||new AC();if(actx.state==="suspended")actx.resume();var b=actx.createBuffer(1,1,22050),s=actx.createBufferSource();s.buffer=b;s.connect(actx.destination);s.start(0)}}catch(e){}}
+$("tap").onclick=function(){unlock();this.style.display="none"};
+document.addEventListener("touchend",unlock,{passive:true});document.addEventListener("click",unlock);
+// tabs
+[].forEach.call(document.querySelectorAll("nav button"),function(b){b.onclick=function(){[].forEach.call(document.querySelectorAll("nav button,section"),function(e){e.classList.remove("on")});b.classList.add("on");$(b.dataset.t).classList.add("on");render();scrollTo(0,0)}});
+// player with anti-skip
+var aud=$("aud"),cur=-1,heard=0,lastT=0,dur=0;
+function songList(){var h="";SONGS.forEach(function(s,i){var n=day().songs[s[0]]||0;h+='<div class="song'+(i===cur?" on":"")+'"><div><b>'+s[1]+'</b><small>Counted today: '+n+'/'+PER_SONG+'</small></div><button class="btn sm" data-i="'+i+'">'+(i===cur&&!aud.paused?"❚❚":"▶")+'</button></div>'});
+if(DEMO)h+='<div class="song"><div><b>+3 more songs</b><small>In the full app</small></div></div>';$("songs").innerHTML=h;
+[].forEach.call($("songs").querySelectorAll("button"),function(b){b.onclick=function(){pick(+b.dataset.i)}})}
+function pick(i){unlock();if(i===cur){aud.paused?aud.play():aud.pause();return}cur=i;heard=0;lastT=0;aud.src="songs/"+SONGS[i][0]+".mp3";aud.play().catch(function(){toast("Tap play again")});$("npT").textContent=SONGS[i][1];songList()}
+$("playBtn").onclick=function(){if(cur<0)pick(0);else{unlock();aud.paused?aud.play():aud.pause()}};
+aud.addEventListener("timeupdate",function(){var t=aud.currentTime,dt=t-lastT;if(dt>0&&dt<1.5&&!aud.muted&&aud.volume>0&&!document.hidden)heard+=dt;lastT=t;dur=aud.duration||0;if(dur)$("npBar").style.width=(t/dur*100)+"%";if(dur)$("npInfo").textContent="Listened "+Math.round(heard)+"s of "+Math.round(dur)+"s"});
+aud.addEventListener("seeking",function(){lastT=aud.currentTime});
+aud.addEventListener("play",function(){$("playBtn").textContent="❚❚ Pause";songList()});aud.addEventListener("pause",function(){$("playBtn").textContent="▶ Play";songList()});
+aud.addEventListener("ended",function(){var d=day(),id=SONGS[cur][0];if(dur&&heard>=dur*0.9){if(d.l>=CAP)toast("Daily listen cap reached. Come back tomorrow");else if((d.songs[id]||0)>=PER_SONG)toast("This song has counted 3 times today. Try another");else{d.l++;d.songs[id]=(d.songs[id]||0)+1;add(10,"Full listen: "+SONGS[cur][1])}}else toast("Skipped parts don't count. Listen the whole way for points");
+heard=0;lastT=0;var n=(cur+1)%SONGS.length;cur=-1;pick(n)});
+// goals
+var GOALS=[["Listen to 3 full songs today",function(){return day().l>=3}],["Share a song today",function(){return day().s>=1}],["Log a promo post today",function(){return day().p>=1}],["Invite a friend",function(){return S.friends.length>=1}],["Reach 100 points",function(){return S.total>=100}],["Reach 500 points",function(){return S.total>=500}],["Reach 1,000 points",function(){return S.total>=1000}]];
+// captions
+var CAPS=["Can't stop playing {s} by Coffeebreak ☕🎶 Songwriter from Newcastle NSW. Have a listen 👇\n{l}\n#Coffeebreak #NewMusic #Newcastle #AussieMusic","My coffee break soundtrack today: {s} by Coffeebreak 💗 Listen free here:\n{l}\n#CoffeebreakMusic #IndieMusic #Australia","Found my new favourite indie artist. {s} by Coffeebreak, made in Newcastle NSW 🎵\n{l}\n#Coffeebreak #SupportIndieArtists","Pour a coffee and press play ☕ {s} by Coffeebreak\n{l}\n#Coffeebreak #CountryMusic #NewMusicFriday"],ci=0;
+function link(){return BASE+"?ref="+S.code}
+function caption(){var s=SONGS[$("capSong").selectedIndex]||SONGS[0];return CAPS[ci%CAPS.length].replace("{s}",s[1]).replace("{l}",link())}
+function copy(t,msg){(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){toast(msg||"Copied")}).catch(function(){var a=document.createElement("textarea");a.value=t;document.body.appendChild(a);a.select();try{document.execCommand("copy")}catch(e){}a.remove();toast(msg||"Copied")})}
+function shared(where){var d=day();if(d.s>=SHARE_CAP){toast("Share points cap reached today. Thanks for sharing");return}d.s++;add(5,"Shared on "+where)}
+$("capSong").innerHTML=SONGS.map(function(s){return"<option>"+s[1]+"</option>"}).join("");
+$("capSong").onchange=$("newCap").onclick=function(e){if(e&&e.target.id==="newCap")ci++;$("caption").value=caption()};
+$("copyCap").onclick=function(){copy($("caption").value,"Caption copied")};
+[].forEach.call(document.querySelectorAll(".share [data-s]"),function(b){b.onclick=function(){var s=b.dataset.s,t=$("caption").value,u=encodeURIComponent(link()),te=encodeURIComponent(t),w;
+if(s==="copy"){copy(t);shared("copy");return}
+if(s==="tiktok"){copy(t,"Caption copied. Paste it into TikTok");w="https://www.tiktok.com/upload"}
+if(s==="ig"){copy(t,"Caption copied. Paste it into Instagram");w="https://www.instagram.com/"}
+if(s==="x")w="https://twitter.com/intent/tweet?text="+te;if(s==="fb")w="https://www.facebook.com/sharer/sharer.php?u="+u;if(s==="wa")w="https://wa.me/?text="+te;
+window.open(w,"_blank","noopener");shared({tiktok:"TikTok",ig:"Instagram",x:"X",fb:"Facebook",wa:"WhatsApp"}[s])}});
+$("copyLink").onclick=function(){copy(link(),"Link copied")};
+$("nativeShare").onclick=function(){if(navigator.share)navigator.share({title:"Coffeebreak music",text:caption(),url:link()}).then(function(){shared("phone share")}).catch(function(){});else{copy(caption());shared("copy")}};
+$("logPost").onclick=function(){var u=$("postUrl").value.trim(),d=day();if(!/^https?:\/\/\S+\.\S+/.test(u)){toast("Paste the full link to your post");return}if(S.posts.some(function(p){return p[1]===u})){toast("That post is already logged");return}if(d.p>=POST_CAP){toast("Promo post cap reached today");return}d.p++;S.posts.push([today(),u]);$("postUrl").value="";add(15,"Promo post")};
+$("addFriend").onclick=function(){var c=$("friendCode").value.trim().toUpperCase(),d=day();if(!/^CB-[A-Z0-9]{4}$/.test(c)){toast("Codes look like CB-7K2Q");return}if(c===S.code){toast("That's your own code");return}if(S.friends.indexOf(c)>=0){toast("Already added");return}if(d.i>=INV_CAP){toast("Invite cap reached today");return}d.i++;S.friends.push(c);$("friendCode").value="";add(25,"Invited "+c)};
+$("copyPayid").onclick=function(){copy("darkokaz@gmx.com","PayID copied")};
+function summary(){var m=month();return"Coffeebreak Listen & Promote points summary\nMonth: "+m+"\nMy code: "+S.code+"\nPoints this month: "+(S.months[m]||0)+"\nTotal points: "+S.total+(S.invitedBy?"\nInvited by: "+S.invitedBy:"")+"\nFriends invited: "+(S.friends.join(", ")||"none")+"\nPromo posts:\n"+(S.posts.filter(function(p){return p[0].indexOf(m.split("-")[0])===0}).map(function(p){return" "+p[0]+" "+p[1]}).join("\n")||" none")+"\nApp: "+(DEMO?"free demo":"full app")}
+$("copySum").onclick=function(){copy(summary(),"Summary copied")};
+function render(){var d=day(),m=month();$("ptsN").textContent=S.total;$("tL").textContent=d.l+"/"+CAP;$("tS").textContent=d.s+"/"+SHARE_CAP;$("tP").textContent=d.p+"/"+POST_CAP;$("tI").textContent=d.i+"/"+INV_CAP;$("capL").textContent=CAP;
+$("myCode").textContent=S.code;$("myLink").value=link();[].forEach.call(document.querySelectorAll(".mc"),function(e){e.textContent=S.code});
+$("goals").innerHTML=GOALS.map(function(g){var ok=g[1]();return'<div class="goal'+(ok?" done":"")+'"><span>'+g[0]+'</span><b>'+(ok?"✔":"")+'</b></div>'}).join("");
+$("mPts").textContent=S.months[m]||0;var n=new Date(),e=new Date(n.getFullYear(),n.getMonth()+1,0);$("mDays").textContent=e.getDate()-n.getDate();
+$("summary").value=summary();$("mailSum").href="mailto:songwriterkaz@gmail.com?subject="+encodeURIComponent("Listen & Promote points "+m+" "+S.code)+"&body="+encodeURIComponent(summary());
+$("friendList").textContent=S.friends.length?"Invited: "+S.friends.join(", "):"";$("postList").textContent=S.posts.length?S.posts.length+" posts logged":"";
+if(S.invitedBy){$("invitedBy").style.display="block";$("invitedBy").textContent="Invited by "+S.invitedBy+". Send them your code "+S.code+" so they get their invite points."}
+if(cur<0||aud.paused)songList()}
+$("caption").value=caption();render();save();
+</script></body></html>
