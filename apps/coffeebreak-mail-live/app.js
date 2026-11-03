@@ -54,4 +54,4 @@ if(tok)api('/me').then(start).catch(()=>{});
 window.CBML={api,get mail(){return mail}};
 })();
 
-api('/status').catch(e=>{const b=document.querySelector('#aMsg');if(b){b.className='msg err';b.textContent=e.message}});
+window.CBML.api('/status').catch(e=>{const b=document.querySelector('#aMsg');if(b){b.className='msg err';b.textContent=e.message}});
