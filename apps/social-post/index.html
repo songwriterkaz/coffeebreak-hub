@@ -3,10 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="referrer" content="no-referrer">
 <title>A post from Coffeebreak Social</title>
 <meta name="description" content="A post shared from Coffeebreak Social, the pink social app by Coffeebreak, songwriter and creator from Newcastle NSW.">
 <meta property="og:title" content="A post from Coffeebreak Social">
-<meta property="og:description" content="Shared from Coffeebreak Social. Get the app for $5 at coffeebreaks.itch.io">
+<meta property="og:description" content="A post shared from Coffeebreak Social. Private posts need a passcode. Get the app for $5 at coffeebreaks.itch.io">
 <meta property="og:image" content="https://songwriterkaz.github.io/coffeebreak-hub/apps/social-post/cb-logo.jpg">
 <style>
 :root{--pink:#e8478b;--pink-d:#b8236a;--pink-l:#fde4ef;--pink-xl:#fff5f9;--ink:#2a1a22;--muted:#6b5560;--line:#f3c3d8}
@@ -46,7 +48,7 @@ footer{max-width:620px;margin:0 auto;padding:12px 14px 30px;font-size:.78rem;col
 </main>
 <footer>
 <p>Coffeebreak songwriter and creator from Newcastle NSW &middot; <a href="https://coffeebreaks.itch.io" target="_blank" rel="noopener">https://coffeebreaks.itch.io</a></p>
-<p>This page shows a post shared from the Coffeebreak Social app. The words of the post travel inside the link itself and are not stored on any server. Pictures, videos and music are not part of the link. Whoever shared the link is responsible for what they wrote.</p>
+<p>This page shows a post shared from the Coffeebreak Social app. The words of the post travel inside the link itself, after the # sign, which browsers never send to the website, so the post is not stored on or seen by any server. Private posts are locked with a passcode (AES-GCM encryption) and are opened only in your browser. Pictures, videos and music are not part of the link. Whoever shared the link is responsible for what they wrote.</p>
 <p>&copy; Karen Elizabeth O'Brien (Coffeebreak). Karen keeps all rights to Coffeebreak Social, its design, name, logo and music. Buyers may resell physical items they bought but may not copy them. Coffeebreak claims no ownership of third-party brands named (such as X, Facebook, WhatsApp, Spotify, Apple Music, YouTube, Tesla and Starlink). They belong to their owners and are named only for description. AI tools were used to help make this app.</p>
 <p><a href="https://www.tesla.com" target="_blank" rel="noopener">Tesla</a> &middot; <a href="https://www.starlink.com" target="_blank" rel="noopener">Starlink</a></p>
 </footer>
@@ -60,10 +62,23 @@ function decode(h){var k=h.charAt(0),bytes=unb64(h.slice(1));
  if(k==='z'){if(!window.DecompressionStream)return Promise.reject(new Error('Please open this link in an up-to-date browser.'));
   return new Response(new Blob([bytes]).stream().pipeThrough(new DecompressionStream('deflate-raw'))).text()}
  return Promise.reject(new Error('This link is not a Coffeebreak Social post.'))}
+function inflate(bytes){return new Response(new Blob([bytes]).stream().pipeThrough(new DecompressionStream('deflate-raw'))).text()}
+function decrypt(h,pass){var b=unb64(h.slice(1));if(b.length<30)return Promise.reject(new Error('This link is not complete.'));
+ if(!(window.crypto&&crypto.subtle))return Promise.reject(new Error('Please open this link in an up-to-date browser.'));
+ var flag=b[0],salt=b.slice(1,17),iv=b.slice(17,29),ct=b.slice(29);
+ return crypto.subtle.importKey('raw',new TextEncoder().encode(pass),'PBKDF2',false,['deriveKey']).then(function(k){return crypto.subtle.deriveKey({name:'PBKDF2',salt:salt,iterations:210000,hash:'SHA-256'},k,{name:'AES-GCM',length:256},false,['decrypt'])})
+ .then(function(key){return crypto.subtle.decrypt({name:'AES-GCM',iv:iv},key,ct)}).then(function(pt){pt=new Uint8Array(pt);return flag?inflate(pt):new TextDecoder().decode(pt)},function(e){if(e&&e.name==='OperationError')throw new Error('wrong');throw e})}
 var el=document.getElementById('post');
 function show(){var h=location.hash.slice(1);
  if(!h){el.innerHTML='<p>No post in this link. <a href="https://coffeebreaks.itch.io/coffeebreak-social">See Coffeebreak Social</a></p>';return}
- decode(h).then(function(t){var o=JSON.parse(t),name=String(o.a||'Coffeebreak Social user').slice(0,60),handle=String(o.h||'').slice(0,40),text=String(o.t||'').slice(0,2000),d=new Date(+o.d||Date.now());
+ if(h.charAt(0)==='e'){askPass(h);return}
+ decode(h).then(render).catch(function(e){el.innerHTML='<p>Sorry, this post link could not be opened. '+esc(e.message||'')+'</p>'})}
+function askPass(h){document.getElementById('sharecard').hidden=true;
+ el.innerHTML='<h2 style="color:var(--pink-d);margin:.2em 0">🔒 Private post</h2><p>Only people with the link and passcode can see it. Ask the person who sent you this link for the passcode.</p><form id="pf" class="row"><label class="sr" for="pw" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Passcode</label><input id="pw" class="grow" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Passcode"><button class="btn">Open post</button></form><p class="meta" id="pmsg" role="status"></p>';
+ var f=document.getElementById('pf'),pw=document.getElementById('pw'),msg=document.getElementById('pmsg');pw.focus();
+ f.addEventListener('submit',function(e){e.preventDefault();var v=pw.value.trim();if(!v)return;msg.textContent='Unlocking…';
+  decrypt(h,v).then(function(t){render(t,true)}).catch(function(e){msg.textContent=e.message==='wrong'?'That passcode is not right. Check it and try again.':'Sorry, this post could not be opened. '+(e.message||'')})})}
+function render(t,priv){var o=JSON.parse(t),name=String(o.a||'Coffeebreak Social user').slice(0,60),handle=String(o.h||'').slice(0,40),text=String(o.t||'').slice(0,2000),d=new Date(+o.d||Date.now());
   var m=String(o.m||''),ni=(m.match(/i/g)||[]).length,nv=(m.match(/v/g)||[]).length,na=(m.match(/a/g)||[]).length,parts=[];
   if(ni)parts.push(ni+' picture'+(ni>1?'s':''));if(nv)parts.push(nv+' video'+(nv>1?'s':''));if(na)parts.push(na+' song'+(na>1?'s':''));
   var logo=/^@coffeebreak$/i.test(handle);
@@ -71,8 +86,9 @@ function show(){var h=location.hash.slice(1);
   el.innerHTML='<div class="who"><span class="av">'+(logo?'<img src="cb-logo.jpg" alt="">':esc(name.charAt(0)))+'</span><div><b>'+esc(name)+'</b><span class="meta">'+esc(handle)+' &middot; '+esc(d.toLocaleString('en-AU',{dateStyle:'medium',timeStyle:'short'}))+'</span></div></div>'+
    (text?'<div class="text">'+fmt(text)+'</div>':'')+(parts.length?'<p class="note">This post also had '+parts.join(', ')+'. Pictures, videos and music do not travel in links, so ask the person who shared it to send them.</p>':'')+
    '<p class="meta">Shared from Coffeebreak Social</p>';
+  if(priv)el.innerHTML+='<p class="meta">🔒 Private post. Share the link only with people you trust, and send the passcode separately.</p>';
   var s=document.getElementById('sharecard');s.hidden=false;document.getElementById('lnk').value=location.href;
- }).catch(function(e){el.innerHTML='<p>Sorry, this post link could not be opened. '+esc(e.message||'')+'</p>'})}
+ }
 document.getElementById('copy').addEventListener('click',function(){var i=document.getElementById('lnk');i.select();(navigator.clipboard?navigator.clipboard.writeText(location.href):Promise.reject()).then(function(){document.getElementById('copy').textContent='Copied'}).catch(function(){try{document.execCommand('copy');document.getElementById('copy').textContent='Copied'}catch(e){}})});
 window.addEventListener('hashchange',show);show();
 })();
