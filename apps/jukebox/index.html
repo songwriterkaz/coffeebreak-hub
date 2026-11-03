@@ -1,0 +1,54 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Coffeebreak Jukebox</title><style>
+*{box-sizing:border-box}html,body{margin:0;height:100%;background:#12051c;color:#fff;font-family:Georgia,serif;overflow:hidden}
+#app{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;padding:8px;gap:8px}
+#box{position:relative;width:min(100%,1100px);flex:1;min-height:0;border-radius:45% 45% 18px 18px/22% 22% 18px 18px;background:linear-gradient(#5a1b2c,#2a0a16);border:10px solid #c8a24a;box-shadow:0 0 40px #ff3cac,inset 0 0 40px #000;display:flex;flex-direction:column;padding:4% 3% 2%;gap:8px}
+.lights{position:absolute;inset:-6px;border-radius:inherit;pointer-events:none;border:8px dashed #ff3cac;animation:neon 1.2s linear infinite}
+@keyframes neon{0%{border-color:#ff3cac;filter:hue-rotate(0)}50%{border-color:#ffd23f}100%{filter:hue-rotate(360deg)}}
+#top{display:flex;align-items:center;gap:12px;justify-content:center}
+#top img{height:clamp(40px,8vh,80px);border-radius:50%;box-shadow:0 0 15px #ffd23f}
+h1{margin:0;font-size:clamp(20px,4vw,44px);color:#ffd23f;text-shadow:0 0 10px #ff3cac,0 0 20px #ff3cac}
+#mid{display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap}
+#vinyl{width:clamp(90px,18vh,180px);aspect-ratio:1;border-radius:50%;background:repeating-radial-gradient(#111 0 2px,#222 3px 4px);position:relative;box-shadow:0 0 20px #000}
+#vinyl:after{content:"";position:absolute;inset:35%;border-radius:50%;background:url(cb-logo.jpg) center/cover}
+.spin{animation:sp 1.8s linear infinite}@keyframes sp{to{transform:rotate(360deg)}}
+#np{background:#000;border:3px solid #c8a24a;border-radius:10px;padding:8px 14px;min-width:240px;font-family:monospace;color:#7fffd4;text-shadow:0 0 6px #7fffd4}
+#np b{display:block;color:#ffd23f;font-size:1.1em}
+canvas{width:100%;height:clamp(40px,10vh,100px);background:#000a;border-radius:8px}
+#keys{flex:1;min-height:0;overflow:auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px;align-content:start}
+.k{background:#fff8e7;color:#2a0a16;border:2px solid #c8a24a;border-radius:6px;padding:6px;font-size:13px;cursor:pointer;text-align:left}
+.k span{background:#ff3cac;color:#fff;border-radius:4px;padding:1px 5px;margin-right:6px;font-weight:bold}
+.k.on{background:#ffd23f;box-shadow:0 0 12px #ffd23f}
+#ctl{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;align-items:center}
+button.c{background:#ff3cac;color:#fff;border:0;border-radius:20px;padding:8px 14px;font-weight:bold;cursor:pointer}
+button.c.act{background:#7fffd4;color:#000}
+#coin{width:34px;height:34px;border-radius:50%;background:radial-gradient(#ffe680,#c8a24a);position:fixed;left:50%;top:-50px;z-index:9}
+.drop{animation:dr .7s ease-in forwards}@keyframes dr{to{top:60%;opacity:0}}
+#q{font-size:12px;color:#ffd23f;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+</style></head><body><div id="cb-buy-note" style="background:#4a2c1a;color:#fff3e0;border-bottom:3px solid #c68b59;padding:10px 14px;font:600 15px/1.45 system-ui,sans-serif;text-align:center;position:relative;z-index:9999">Free music software. Coffeebreak on itch: <a href="https://coffeebreaks.itch.io" target="_blank" rel="noopener" style="color:#ffd9a0">https://coffeebreaks.itch.io</a></div><div id="app"><div id="box"><div class="lights"></div>
+<div id="top"><img src="cb-logo.jpg" alt="Coffeebreak"><h1>Coffeebreak Jukebox</h1></div>
+<div id="mid"><div id="vinyl"></div><div id="np"><small>NOW PLAYING</small><b id="title">Insert a coin and pick a song</b><span id="time">--:--</span></div></div>
+<canvas id="viz"></canvas><div id="keys"></div>
+<div id="q">Queue: empty</div>
+<div id="ctl"><button class="c" id="coinb">Insert Coin</button><button class="c" id="prev">Prev</button><button class="c" id="play">Play</button><button class="c" id="next">Next</button><button class="c" id="shuf">Shuffle</button><button class="c" id="all">Play All</button><button class="c" id="clr">Clear Queue</button>
+<label>Vol <input type="range" id="vol" min="0" max="1" step="0.01" value="0.8"></label><button class="c" id="fs">Full screen</button></div>
+</div></div><div id="coin"></div><audio id="au" crossorigin="anonymous"></audio>
+<script src="songs.js"></script><script>
+const $=id=>document.getElementById(id),au=$('au');let queue=[],cur=-1,shuf=false,ctx,an;
+SONGS.forEach((s,i)=>{const b=document.createElement('button');b.className='k';b.innerHTML='<span>'+s.code+'</span>'+s.title;b.onclick=()=>{coin();queue.push(i);showQ();if(au.paused&&cur<0||au.ended)nextQ()};b.ondblclick=()=>playI(i);SONGS[i].el=b;$('keys').appendChild(b)});
+function coin(){const c=$('coin');c.classList.remove('drop');void c.offsetWidth;c.classList.add('drop')}
+function showQ(){$('q').textContent='Queue: '+(queue.length?queue.map(i=>SONGS[i].code).join(', '):'empty')}
+function initA(){if(ctx)return;ctx=new(window.AudioContext||window.webkitAudioContext)();an=ctx.createAnalyser();an.fftSize=128;const src=ctx.createMediaElementSource(au);src.connect(an);an.connect(ctx.destination);draw()}
+function playI(i){initA();ctx.resume();cur=i;au.src=SONGS[i].file;au.play();$('title').textContent=SONGS[i].code+'  '+SONGS[i].title;SONGS.forEach(s=>s.el.classList.remove('on'));SONGS[i].el.classList.add('on');SONGS[i].el.scrollIntoView({block:'nearest'})}
+function nextQ(){if(queue.length){playI(queue.shift());showQ()}else playI(shuf?Math.floor(Math.random()*SONGS.length):(cur+1)%SONGS.length)}
+au.onended=nextQ;au.onplay=()=>{$('vinyl').classList.add('spin');$('play').textContent='Pause'};au.onpause=()=>{$('vinyl').classList.remove('spin');$('play').textContent='Play'};
+au.ontimeupdate=()=>{const f=t=>Math.floor(t/60)+':'+String(Math.floor(t%60)).padStart(2,'0');$('time').textContent=f(au.currentTime)+' / '+(au.duration?f(au.duration):'--:--')};
+$('play').onclick=()=>{if(cur<0)nextQ();else au.paused?au.play():au.pause()};$('next').onclick=nextQ;$('prev').onclick=()=>playI((cur-1+SONGS.length)%SONGS.length);
+$('shuf').onclick=e=>{shuf=!shuf;e.target.classList.toggle('act',shuf)};$('coinb').onclick=()=>{coin();if(cur<0)nextQ()};
+$('all').onclick=()=>{queue=SONGS.map((s,i)=>i);if(shuf)queue.sort(()=>Math.random()-.5);showQ();nextQ()};$('clr').onclick=()=>{queue=[];showQ()};
+$('vol').oninput=e=>au.volume=e.target.value;au.volume=.8;
+$('fs').onclick=()=>{const d=document.documentElement;if(document.fullscreenElement||document.webkitFullscreenElement)(document.exitFullscreen||document.webkitExitFullscreen).call(document);else(d.requestFullscreen||d.webkitRequestFullscreen).call(d)};
+const cv=$('viz'),g=cv.getContext('2d');let ph=0;
+function draw(){requestAnimationFrame(draw);cv.width=cv.clientWidth;cv.height=cv.clientHeight;const n=48,d=new Uint8Array(64);if(an&&!au.paused)an.getByteFrequencyData(d);else for(let i=0;i<64;i++)d[i]=60+50*Math.sin(ph+i/3);ph+=.05;const w=cv.width/n;for(let i=0;i<n;i++){const h=d[i]/255*cv.height;g.fillStyle='hsl('+(300+i*3+ph*20)%360+',100%,60%)';g.fillRect(i*w+1,cv.height-h,w-2,h)}}
+draw();
+</script><script src="cbreport.js"></script><script src="cb-plus.js" data-app="Coffeebreak Jukebox" data-url="https://coffeebreaks.itch.io" data-kind="app" data-howto="Press the pink All Coffeebreak songs button at the bottom left.|Search for a song or a word from the lyrics, or tick Clean only.|Tap a song to play it. The lyrics scroll and light up as it plays.|Press Play my own song to play any song from your device, and paste its lyrics if you like."></script><script src="cb-suno-karaoke.js"></script></body></html>

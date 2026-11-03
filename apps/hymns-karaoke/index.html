@@ -1,0 +1,61 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Coffeebreak Hymns Karaoke</title><style>
+*{box-sizing:border-box}body{margin:0;background:#2b1a10;color:#f6e7d2;font-family:Georgia,serif;max-width:400px;margin:auto;min-height:100vh}
+header{display:flex;align-items:center;gap:10px;padding:10px;background:#4a2c18;border-bottom:2px solid #c89b5f}
+header img{width:46px;height:46px;border-radius:50%;border:2px solid #c89b5f}h1{font-size:19px;margin:0;color:#ffd9a0}
+.tabs{display:flex}.tabs button{flex:1}button{background:#7a4a26;color:#fff3e0;border:1px solid #c89b5f;border-radius:10px;padding:9px;font-size:15px;margin:3px;font-family:inherit}
+button.on{background:#c89b5f;color:#2b1a10}#list{padding:6px}.song{display:flex;align-items:center;background:#3b2414;margin:5px 0;border-radius:12px;padding:10px}
+.song div{flex:1}.song b{font-size:17px}.song small{display:block;color:#d7b88e;font-size:12px}.fav{background:none;border:none;font-size:22px;color:#c89b5f}
+#player{display:none;padding:8px}#lyr{background:#1e120a;border-radius:14px;padding:14px;min-height:300px;font-size:25px;line-height:1.45;text-align:center}
+.ln{opacity:.45;margin:6px 0}.ln.cur{opacity:1}.wd.done{color:#ffc46b;text-shadow:0 0 6px #a0611f}
+.row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;font-size:14px;margin:6px 0}
+#vlab{color:#d7b88e;font-size:14px;text-align:center}.ft{text-align:center;font-size:11px;color:#a8875f;padding:10px}
+audio{width:100%}</style></head><body><div id="cb-buy-note" style="background:#4a2c1a;color:#fff3e0;border-bottom:3px solid #c68b59;padding:10px 14px;font:600 15px/1.45 system-ui,sans-serif;text-align:center;position:relative;z-index:9999">Free music software. Coffeebreak on itch: <a href="https://coffeebreaks.itch.io" target="_blank" rel="noopener" style="color:#ffd9a0">https://coffeebreaks.itch.io</a></div>
+<header><img src="logo.jpg" alt="Coffeebreak"><div><h1>Coffeebreak Hymns Karaoke</h1><small>Sing along to classic public-domain hymns</small></div></header>
+<div class="tabs"><button id="tAll" class="on">All hymns</button><button id="tFav">Favourites</button></div>
+<div id="list"></div>
+<div id="player">
+<div class="row"><button id="back">Back</button><b id="ptitle" style="flex:1;text-align:center"></b><button class="fav" id="pfav">♡</button></div>
+<div id="vlab"></div><div id="lyr"></div>
+<div class="row"><button id="play">Play</button><button id="stop">Stop</button><button id="sing">Sing mode: off</button></div>
+<div class="row">Tempo <button id="tdn">-</button><span id="tv">100%</span><button id="tup">+</button> Key <button id="kdn">-</button><span id="kv">0</span><button id="kup">+</button></div>
+<div class="row">Sound <button id="snd">Organ</button><button id="rec">Record myself</button></div>
+<div id="recout"></div></div>
+<div class="ft">Words and tunes are public domain. Backing melodies are original simple arrangements by Coffeebreak.</div>
+<script src="songs.js"></script><script>
+const $=id=>document.getElementById(id);let favs=JSON.parse(localStorage.cbhFav||"[]"),showFav=false,cur=null;
+let tempo=1,key=0,organ=true,singMode=false,ctx=null,timer=null,playing=false;
+function list(){const L=$("list");L.innerHTML="";SONGS.filter(s=>!showFav||favs.includes(s.id)).forEach(s=>{const d=document.createElement("div");d.className="song";
+d.innerHTML=`<div><b>${s.t}</b><small>${s.w} · ${s.tune}</small></div><button class="fav">${favs.includes(s.id)?"♥":"♡"}</button>`;
+d.querySelector("div").onclick=()=>open(s);d.querySelector(".fav").onclick=e=>{togFav(s.id);list()};L.appendChild(d)});
+if(!L.children.length)L.innerHTML="<p style='text-align:center'>Tap the heart on a hymn to save it here.</p>"}
+function togFav(id){favs=favs.includes(id)?favs.filter(x=>x!=id):[...favs,id];localStorage.cbhFav=JSON.stringify(favs)}
+$("tAll").onclick=()=>{showFav=false;$("tAll").className="on";$("tFav").className="";list()};$("tFav").onclick=()=>{showFav=true;$("tFav").className="on";$("tAll").className="";list()};
+const parse=p=>p.trim().split(/\s+/).map(x=>{const[n,b]=x.split("/");return{n,b:+b}});
+const ST={C:0,D:2,E:4,F:5,G:7,A:9,B:11};function freq(n){const m=n.match(/([A-G])(#|b)?(\d)/);let s=ST[m[1]]+(m[2]=="#"?1:m[2]=="b"?-1:0)+12*(+m[3]+1)+key;return 440*Math.pow(2,(s-69)/12)}
+function timeline(s){const ev=[];let t=0;s.v.forEach((verse,vi)=>verse.forEach((line,li)=>{const notes=parse(s.p[li%s.p.length]);const dur=notes.reduce((a,x)=>a+x.b,0);ev.push({vi,li,line,t,dur,notes});t+=dur+1}));return{ev,total:t}}
+function open(s){stop();cur=s;$("list").style.display="none";document.querySelector(".tabs").style.display="none";$("player").style.display="block";$("ptitle").textContent=s.t;$("pfav").textContent=favs.includes(s.id)?"♥":"♡";render(0,-1,0)}
+$("pfav").onclick=()=>{togFav(cur.id);$("pfav").textContent=favs.includes(cur.id)?"♥":"♡"};
+$("back").onclick=()=>{stop();$("player").style.display="none";$("list").style.display="block";document.querySelector(".tabs").style.display="flex";list()};
+function render(vi,li,frac){const v=cur.v[vi];$("vlab").textContent=`Verse ${vi+1} of ${cur.v.length}`;$("lyr").innerHTML=v.map((l,i)=>{const w=l.split(" ");const k=i<li?w.length:i==li?Math.ceil(frac*w.length):0;
+return`<div class="ln ${i==li?"cur":""}">${w.map((x,j)=>`<span class="wd ${j<k?"done":""}">${x}</span>`).join(" ")}</div>`}).join("")}
+function note(f,t0,d){const o=ctx.createOscillator(),g=ctx.createGain();if(organ){o.type="sine";const o2=ctx.createOscillator();o2.type="sine";o2.frequency.value=f*2;const g2=ctx.createGain();g2.gain.value=.3;o2.connect(g2).connect(g);o2.start(t0);o2.stop(t0+d+.05);
+g.gain.setValueAtTime(0,t0);g.gain.linearRampToValueAtTime(.22,t0+.04);g.gain.setValueAtTime(.22,t0+d*.9);g.gain.linearRampToValueAtTime(0,t0+d)}else{o.type="triangle";g.gain.setValueAtTime(.35,t0);g.gain.exponentialRampToValueAtTime(.001,t0+Math.max(d,.4)*1.2)}
+o.frequency.value=f;o.connect(g).connect(ctx.destination);o.start(t0);o.stop(t0+d*1.3+.1)}
+function play(){if(!cur)return;stop();ctx=ctx||new(window.AudioContext||window.webkitAudioContext)();ctx.resume();const spb=60/(cur.bpm*tempo);const{ev}=timeline(cur);const st=ctx.currentTime+.3;
+if(!singMode)ev.forEach(e=>{let t=e.t;e.notes.forEach(n=>{note(freq(n.n),st+t*spb,n.b*spb*.95);t+=n.b})});
+playing=true;timer=setInterval(()=>{const now=(ctx.currentTime-st)/spb;let e=ev.filter(x=>x.t<=now).pop();if(!e)return;const fr=Math.min(1,(now-e.t)/e.dur);render(e.vi,e.li,fr);
+if(now>ev[ev.length-1].t+ev[ev.length-1].dur+.5){stop();render(e.vi,99,1)}},80)}
+function stop(){clearInterval(timer);playing=false;if(ctx){ctx.close();ctx=null}}
+$("play").onclick=play;$("stop").onclick=stop;
+$("sing").onclick=()=>{singMode=!singMode;$("sing").textContent="Sing mode: "+(singMode?"on":"off");$("sing").className=singMode?"on":""};
+$("tup").onclick=()=>{tempo=Math.min(1.6,tempo+.1);$("tv").textContent=Math.round(tempo*100)+"%"};$("tdn").onclick=()=>{tempo=Math.max(.5,tempo-.1);$("tv").textContent=Math.round(tempo*100)+"%"};
+$("kup").onclick=()=>{key=Math.min(6,key+1);$("kv").textContent=key};$("kdn").onclick=()=>{key=Math.max(-6,key-1);$("kv").textContent=key};
+$("snd").onclick=()=>{organ=!organ;$("snd").textContent=organ?"Organ":"Piano"};
+let mr=null;$("rec").onclick=async()=>{if(mr&&mr.state=="recording"){mr.stop();return}
+try{const s=await navigator.mediaDevices.getUserMedia({audio:true});const ch=[];mr=new MediaRecorder(s);mr.ondataavailable=e=>ch.push(e.data);
+mr.onstop=()=>{s.getTracks().forEach(t=>t.stop());const b=new Blob(ch,{type:mr.mimeType});const u=URL.createObjectURL(b);$("rec").textContent="Record myself";
+$("recout").innerHTML=`<audio controls src="${u}"></audio><a style="color:#ffc46b" download="coffeebreak-${cur.id}.webm" href="${u}">Save recording to this device</a>`};
+mr.start();$("rec").textContent="Stop recording";play()}catch(e){$("recout").textContent="Microphone not available. You can still sing along in sing mode."}};
+list();
+</script><script src="cbreport.js"></script><script src="cb-plus.js" data-app="Coffeebreak Hymns Karaoke" data-url="https://coffeebreaks.itch.io" data-kind="app" data-howto="Press the pink All Coffeebreak songs button at the bottom left.|Search for a song or a word from the lyrics, or tick Clean only.|Tap a song to play it. The lyrics scroll and light up as it plays.|Press Play my own song to play any song from your device, and paste its lyrics if you like."></script><script src="cb-suno-karaoke.js"></script></body></html>
