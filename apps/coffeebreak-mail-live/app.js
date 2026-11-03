@@ -1,6 +1,6 @@
 // Coffeebreak Mail Live. (c) Karen (Coffeebreak). All rights reserved.
 (function(){
-const API=/netlify\.app$|^localhost$|^127\.0\.0\.1$/.test(location.hostname)?'':'https://coffeebreak-mail-live.netlify.app';
+const API=/netlify\.app$|coffeebreaks\.workers\.dev$|^localhost$|^127\.0\.0\.1$/.test(location.hostname)?'':'https://cbmail-live.coffeebreaks.workers.dev';
 const $=s=>document.querySelector(s);
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let tok=localStorage.getItem('cbml_tok')||'',me=null,mail=[],folder='Inbox',since=0,mode='sign',cur=null;
