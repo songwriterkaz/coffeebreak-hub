@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>Coffeebreak Mount Sugarloaf VR Map</title>
+<style>
+
+:root{--pk:#ff4fa3;--pk2:#ffd1e8;--pk3:#ffe9f4;--dk:#3a0d27;--ink:#2a1020}
+.cbf{background:linear-gradient(135deg,#3a0d27,#7a1650);color:#ffe9f4;padding:18px 14px 22px;text-align:center;font:14px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}
+.cbf a{color:#ffd1e8}
+.cbf .btns{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;align-items:center;margin-bottom:10px}
+.cbf .btns a{display:inline-block;padding:8px 14px;border-radius:999px;text-decoration:none;font-weight:700}
+.cbf .yt{background:#ff0033;color:#fff}.cbf .suno{background:#fff;color:#7a1650}.cbf .itch{background:#ff4fa3;color:#fff}
+.cbf .stream{font-weight:700}
+.cbf .pay{background:#ffffff1f;border-radius:10px;padding:8px;margin:8px auto;max-width:720px;font-weight:700}
+.cbf .rights{font-size:12px;opacity:.9;max-width:820px;margin:8px auto}
+.cbf .tl{margin-top:10px}
+
+*{box-sizing:border-box}
+body{margin:0;font:14px/1.4 system-ui,-apple-system,Segoe UI,sans-serif;background:#ffe9f4;color:#2a1020}
+header{display:flex;align-items:center;gap:12px;padding:8px 14px;background:linear-gradient(135deg,#ff4fa3,#ff8cc6);color:#fff}
+header img{width:48px;height:48px;border-radius:50%;border:3px solid #fff;object-fit:cover}
+header h1{font-size:19px;margin:0}header p{margin:0;font-size:12px}
+.price{margin-left:auto;background:#fff;color:#c2185b;border-radius:999px;padding:6px 12px;font-weight:800}
+#view{position:relative;height:72vh;min-height:420px;background:#bfe3ff;overflow:hidden;touch-action:none}
+#gl{width:100%;height:100%;display:block}
+.hud{position:absolute;background:#ffffffe6;border-radius:12px;padding:8px;box-shadow:0 2px 10px #0003;font-size:12px}
+#hudL{left:8px;top:8px;max-width:270px}
+#hudR{right:8px;top:8px}
+#mini{display:block;border-radius:8px;width:170px;height:170px}
+#poi{left:8px;bottom:8px;max-width:340px;display:none}
+#poi h3{margin:0 0 4px;color:#c2185b}
+button{font:inherit;background:#ff4fa3;color:#fff;border:0;border-radius:9px;padding:6px 9px;cursor:pointer;font-weight:700;margin:2px}
+button.alt{background:#fff;color:#c2185b;border:2px solid #ff4fa3}
+#pad{position:absolute;right:10px;bottom:10px;display:grid;grid-template-columns:repeat(3,48px);gap:4px}
+#pad button{height:44px;margin:0;font-size:18px;opacity:.85}
+#vr{position:absolute;left:50%;bottom:10px;transform:translateX(-50%)}
+.info{max-width:1000px;margin:12px auto;padding:0 14px}
+.info h2{color:#c2185b}
+#lab{position:absolute;inset:0;pointer-events:none}
+.tag{position:absolute;transform:translate(-50%,-100%);background:#c2185b;color:#fff;padding:2px 7px;border-radius:999px;font-size:11px;white-space:nowrap;font-weight:700}
+.tag.far{background:#3a0d27cc}
+</style></head><body>
+<header><img src="cb-logo.jpg" alt="Coffeebreak logo"><div><h1>Coffeebreak Mount Sugarloaf VR Map</h1><p>Walk or fly around Mount Sugarloaf near Newcastle NSW, in your browser or a VR headset</p></div><span class="price">$5</span></header>
+<div id="view"><canvas id="gl"></canvas><div id="lab"></div>
+<div class="hud" id="hudL"><b>Go to</b><div id="poiBtns"></div>
+<div style="margin-top:6px"><button id="mode">Mode: Walk</button><button class="alt" id="snow">Snow 1965</button><button class="alt" id="tod">Sunset</button><button class="alt" id="exag">Height x1</button></div>
+<div id="pos" style="margin-top:4px"></div></div>
+<div class="hud" id="hudR"><canvas id="mini" width="340" height="340"></canvas><div style="text-align:center">Map, north is up</div></div>
+<div class="hud" id="poi"><h3 id="poiT"></h3><div id="poiD"></div></div>
+<div id="pad"><span></span><button data-k="f">&#9650;</button><button data-k="u" title="Up (fly)">&#8679;</button><button data-k="l">&#9664;</button><button data-k="b">&#9660;</button><button data-k="r">&#9654;</button><span></span><span></span><button data-k="d" title="Down (fly)">&#8681;</button></div>
+<button id="vr" style="display:none">Enter VR</button>
+</div>
+<div class="info"><h2>How to explore</h2>
+<p>Keyboard: W A S D or arrow keys to move, drag the view to look around, Shift to run, F to switch between walking and flying, Q and E to go up and down while flying. On a phone or tablet use the arrow pad and drag to look. With a VR headset press Enter VR, then use the left thumbstick to move and the right thumbstick to turn.</p>
+<p>Mount Sugarloaf (Kapara in the Awabakal language) rises to 412 m in the Sugarloaf State Conservation Area, near West Wallsend, about 25 km west of Newcastle. The summit has television transmitters and views over Newcastle, Lake Macquarie, Maitland and Cessnock. Snow fell on the summit in July 1965 and again in 1975.</p>
+<p style="font-size:12px">This is a stylised, approximate 3D model made from generated terrain around the real coordinates (summit 32.8817 S, 151.5344 E). It is for fun and planning only and is not survey or safety data. Track positions are approximate. Before visiting, check NSW National Parks alerts for closures, stay on formed tracks and take care near unfenced cliffs.</p></div>
+<footer class="cbf" id="cbfooter">
+<div class="btns"><a class="yt" href="https://www.youtube.com/@coffeebreakTVSERIES?sub_confirmation=1" target="_blank" rel="noopener">&#9654; Subscribe on YouTube</a>
+<span class="stream">Stream my music</span><a class="suno" href="https://suno.com/@coffeebreakkobs" target="_blank" rel="noopener">&#9835; Coffeebreak on Suno</a>
+<a class="itch" href="https://coffeebreaks.itch.io" target="_blank" rel="noopener">More Coffeebreak apps on itch</a></div>
+<div class="pay">Coffeebreak app price $5. Pay by PayID (Teachers Mutual Bank): darkokaz@gmx.com</div>
+<p class="rights">&copy; 2026 Karen O'Brien (Coffeebreak), Newcastle NSW. Karen O'Brien (Coffeebreak) keeps all rights to her products, designs, apps, name and logo. Buyers may resell physical items they bought, but may not copy them or make their own versions. Coffeebreak claims no copyright or ownership of any third-party brands named; they belong to their owners and are named only for description.</p>
+<p class="tl"><a href="https://www.tesla.com" target="_blank" rel="noopener">Tesla</a> &middot; <a href="https://www.starlink.com" target="_blank" rel="noopener">Starlink</a></p>
+</footer>
+<script src="three.min.js"></script>
+<script>
+"use strict";
+const LAT0=-32.88167,LON0=151.53444,MPD_LAT=110950,MPD_LON=111320*Math.cos(LAT0*Math.PI/180);
+const toXZ=(lat,lon)=>({x:(lon-LON0)*MPD_LON,z:-(lat-LAT0)*MPD_LAT});
+const toLL=(x,z)=>({lat:LAT0-z/MPD_LAT,lon:LON0+x/MPD_LON});
+const SIZE=5000,N=257;
+// smooth value noise
+function hash(i,j){let h=i*374761393+j*668265263;h=(h^(h>>13))*1274126177;return((h^(h>>16))>>>0)/4294967296;}
+function vnoise(x,y){const i=Math.floor(x),j=Math.floor(y),fx=x-i,fy=y-j,s=t=>t*t*(3-2*t);const a=hash(i,j),b=hash(i+1,j),c=hash(i,j+1),d=hash(i+1,j+1);return a+(b-a)*s(fx)+(c-a)*s(fy)+(a-b-c+d)*s(fx)*s(fy);}
+function fbm(x,y){let v=0,a=1,f=1;for(let o=0;o<5;o++){v+=a*vnoise(x*f,y*f);a*=.5;f*=2.03;}return v/1.94;}
+const POI=[
+ {n:'Summit lookout',lat:-32.88167,lon:151.53444,d:'Highest point at 412 m with television transmitters and 360 degree views over Newcastle, Lake Macquarie and out to the ocean. Reached by steep fenced steps from the car park.'},
+ {n:'Main car park',lat:-32.89082,lon:151.53949,d:'Car park off Mount Sugarloaf Road at about 370 m, with a pond, picnic spot and information sign. Most walks start here.'},
+ {n:'Western lookout',lat:-32.889086,lon:151.534129,d:'Unfenced viewpoint looking west over the inland plains to the Watagans. A good sunset spot.'},
+ {n:'Northern viewpoint',lat:-32.8750,lon:151.5352,d:'Quiet viewpoint on a steep rocky ridge about 750 m north of the summit, reached by the Cliff Walk.'},
+ {n:'Lower car park',lat:-32.8842,lon:151.5455,d:'Lower car park on the Northern Track circuit (approximate position).'},
+];
+POI.forEach(p=>Object.assign(p,toXZ(p.lat,p.lon)));
+const S=POI[0],CP=POI[1],WL=POI[2],NV=POI[3],LCP=POI[4];
+// terrain height in metres (approximate, generated)
+function rawH(x,z){const d=Math.hypot(x-S.x,z-S.z);let h=95+300*Math.exp(-Math.pow(d/620,1.55));
+ // ridge to the north viewpoint and south-east spur toward car park/road
+ const ridge=(ax,az,bx,bz,w,amp)=>{const vx=bx-ax,vz=bz-az,t=Math.max(0,Math.min(1,((x-ax)*vx+(z-az)*vz)/(vx*vx+vz*vz)));const px=ax+vx*t,pz=az+vz*t,dd=Math.hypot(x-px,z-pz);return amp*(1-t*.55)*Math.exp(-(dd*dd)/(w*w));};
+ h+=ridge(S.x,S.z,NV.x,NV.z-500,230,130);h+=ridge(S.x,S.z,CP.x+700,CP.z+900,260,120);h+=ridge(S.x,S.z,S.x-1800,S.z+600,380,80);
+ // western cliffs: steeper drop on west side
+ if(x<S.x-150)h-=Math.min(40,(S.x-150-x)*.08)*Math.exp(-Math.pow(d/900,2));
+ h+=(fbm(x/420+10,z/420+5)-.5)*55+(fbm(x/90,z/90)-.5)*8;
+ return h;}
+const KS=412/rawH(S.x,S.z);let EXAG=1;
+function H0(x,z){const d=Math.hypot(x-S.x,z-S.z);const k=1+(KS-1)*Math.exp(-(d*d)/(900*900));return rawH(x,z)*k;}
+// approximate elevation anchors (car park about 370 m, lookouts on the ridge), blended in smoothly
+const ANC=[[S,412],[CP,370],[WL,380],[NV,335],[LCP,265]].map(([p,t])=>({x:p.x,z:p.z,t,c:0}));
+const corr=(x,z)=>{let v=0;for(const a of ANC){const dd=(x-a.x)**2+(z-a.z)**2;v+=a.c*Math.exp(-dd/(480*480));}return v;};
+for(let it=0;it<8;it++)for(const a of ANC)a.c+=a.t-(H0(a.x,a.z)+corr(a.x,a.z));
+function H(x,z){return Math.max(20,H0(x,z)+corr(x,z))*EXAG;}
+// --- three setup
+const cv=document.getElementById('gl'),R=new THREE.WebGLRenderer({canvas:cv,antialias:true});R.setPixelRatio(Math.min(2,devicePixelRatio));R.xr.enabled=true;
+const scene=new THREE.Scene(),cam=new THREE.PerspectiveCamera(65,1,0.5,40000),rig=new THREE.Group();rig.add(cam);scene.add(rig);
+const sky=new THREE.Color('#bfe3ff');scene.background=sky;scene.fog=new THREE.Fog(sky,3000,14000);
+const hemi=new THREE.HemisphereLight(0xffffff,0x6b5a3a,1.1);scene.add(hemi);const sun=new THREE.DirectionalLight(0xfff2e0,1.8);sun.position.set(3000,4000,1500);scene.add(sun);
+let terrain,trees,tracks=[];
+function buildTerrain(){if(terrain){scene.remove(terrain);terrain.geometry.dispose();}
+ const g=new THREE.PlaneGeometry(SIZE*2,SIZE*2,N-1,N-1);g.rotateX(-Math.PI/2);const p=g.attributes.position,col=new Float32Array(p.count*3);
+ for(let i=0;i<p.count;i++){const x=p.getX(i),z=p.getZ(i),h=H(x,z);p.setY(i,h);}
+ g.computeVertexNormals();const nm=g.attributes.normal;
+ for(let i=0;i<p.count;i++){const h=p.getY(i)/EXAG,sl=1-nm.getY(i),n=fbm(p.getX(i)/60,p.getZ(i)/60);let c;
+  if(snowOn&&h>300)c=[.95,.96,1];else if(sl>.25)c=[.55+n*.1,.5+n*.08,.45];else if(h>385)c=[.5+n*.1,.55,.38];else c=[.16+n*.12,.36+n*.15,.14+n*.06];
+  col.set(c,i*3);}
+ g.setAttribute('color',new THREE.BufferAttribute(col,3));terrain=new THREE.Mesh(g,new THREE.MeshLambertMaterial({vertexColors:true}));scene.add(terrain);
+ // distant flat land and water
+ if(!scene.getObjectByName('far')){const far=new THREE.Mesh(new THREE.RingGeometry(SIZE*1.35,38000,64,1),new THREE.MeshLambertMaterial({color:0x5c7a45}));far.rotation.x=-Math.PI/2;far.position.y=40;far.name='far';scene.add(far);
+  const lake=new THREE.Mesh(new THREE.CircleGeometry(9000,48),new THREE.MeshLambertMaterial({color:0x3b8fd1}));lake.rotation.x=-Math.PI/2;lake.position.set(9000,41,17000);scene.add(lake);
+  const sea=new THREE.Mesh(new THREE.PlaneGeometry(20000,60000),new THREE.MeshLambertMaterial({color:0x2a6fb5}));sea.rotation.x=-Math.PI/2;sea.position.set(32000,41,0);scene.add(sea);
+  const skirt=new THREE.Mesh(new THREE.RingGeometry(SIZE*0.98,SIZE*1.4,64,1),new THREE.MeshLambertMaterial({color:0x4d6b3a}));skirt.rotation.x=-Math.PI/2;skirt.position.y=60;scene.add(skirt);}
+ buildTrees();buildTracks();placeMarkers();}
+function buildTrees(){if(trees){scene.remove(trees);}const n=6000,geo=new THREE.ConeGeometry(4,14,6);geo.translate(0,7,0);trees=new THREE.InstancedMesh(geo,new THREE.MeshLambertMaterial({color:0x2f5d2a}),n);const m=new THREE.Matrix4();let k=0;let s=12345;const r=()=>(s=(s*1664525+1013904223)>>>0)/4294967296;
+ for(let i=0;i<n*3&&k<n;i++){const x=(r()-.5)*SIZE*1.9,z=(r()-.5)*SIZE*1.9;if(Math.hypot(x-S.x,z-S.z)<40||Math.hypot(x-CP.x,z-CP.z)<60)continue;const sc=.7+r()*1.2;m.makeScale(sc,sc*(.8+r()*.6),sc);m.setPosition(x,H(x,z)-1,z);trees.setMatrixAt(k++,m);}
+ trees.count=k;if(!snowOn)scene.add(trees);else scene.add(trees);trees.material.color.set(snowOn?0x7f9a86:0x2f5d2a);}
+const TRACKS=[
+ {n:'Summit walk',c:0xf49ac1,pts:[CP,{x:CP.x-150,z:CP.z-300},{x:S.x+120,z:S.z+250},S]},
+ {n:'Summit loop',c:0xffd166,pts:[CP,{x:CP.x-250,z:CP.z+80},{x:WL.x+60,z:WL.z+60},WL,{x:S.x-260,z:S.z+150},{x:S.x+250,z:S.z+120},{x:CP.x+60,z:CP.z-120},CP]},
+ {n:'Cliff walk',c:0xffffff,pts:[WL,{x:S.x-330,z:S.z-100},{x:S.x-260,z:S.z-700},{x:NV.x-80,z:NV.z+250},NV]},
+ {n:'Northern track',c:0x9be7ff,pts:[NV,{x:NV.x+500,z:NV.z+400},LCP,{x:LCP.x-300,z:LCP.z+500},{x:CP.x+200,z:CP.z-100},CP]},
+ {n:'Mount Sugarloaf Road',c:0x555555,pts:[CP,{x:CP.x+500,z:CP.z+400},{x:CP.x+1100,z:CP.z+300},{x:CP.x+1700,z:CP.z+900},{x:CP.x+2600,z:CP.z+1300},{x:CP.x+3600,z:CP.z+2000}]}];
+function buildTracks(){tracks.forEach(t=>scene.remove(t));tracks=[];TRACKS.forEach(t=>{const curve=new THREE.CatmullRomCurve3(t.pts.map(p=>new THREE.Vector3(p.x,0,p.z)));const pts=curve.getSpacedPoints(Math.ceil(curve.getLength()/2));const P=[];const w=t.n.includes('Road')?3:.9;
+ for(let i=0;i<pts.length-1;i++){const a=pts[i],b=pts[i+1],dx=b.x-a.x,dz=b.z-a.z,l=Math.hypot(dx,dz)||1,nx=-dz/l*w,nz=dx/l*w;const ha=H(a.x,a.z)+.12,hb=H(b.x,b.z)+.12;P.push(a.x+nx,ha,a.z+nz,a.x-nx,ha,a.z-nz,b.x+nx,hb,b.z+nz, a.x-nx,ha,a.z-nz,b.x-nx,hb,b.z-nz,b.x+nx,hb,b.z+nz);}
+ const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(P,3));const m=new THREE.Mesh(g,new THREE.MeshBasicMaterial({color:t.c,side:THREE.DoubleSide,polygonOffset:true,polygonOffsetFactor:-2,polygonOffsetUnits:-2}));m.userData=t;scene.add(m);tracks.push(m);t.line=pts;});}
+let markers=[];
+function placeMarkers(){markers.forEach(m=>scene.remove(m));markers=[];POI.forEach(p=>{const g=new THREE.Group();const pole=new THREE.Mesh(new THREE.CylinderGeometry(.6,.6,24,8),new THREE.MeshLambertMaterial({color:0xffffff}));pole.position.y=12;const ball=new THREE.Mesh(new THREE.SphereGeometry(4,16,12),new THREE.MeshLambertMaterial({color:0xff4fa3,emissive:0x661133}));ball.position.y=26;g.add(pole,ball);g.position.set(p.x,H(p.x,p.z),p.z);scene.add(g);markers.push(g);});
+ // transmitter towers at the summit
+ [[-25,10,90],[20,-15,70],[5,30,55]].forEach(([dx,dz,h])=>{const t=new THREE.Group();for(let i=0;i<h/10;i++){const seg=new THREE.Mesh(new THREE.CylinderGeometry(1.2,1.6,10,4,1,true),new THREE.MeshLambertMaterial({color:i%2?0xffffff:0xe03131,wireframe:true}));seg.position.y=i*10+5;t.add(seg);}t.position.set(S.x+dx,H(S.x+dx,S.z+dz),S.z+dz);scene.add(t);markers.push(t);});}
+// direction labels to towns (approximate bearings)
+const FAR=[{n:'Newcastle 25 km',lat:-32.927,lon:151.776},{n:'Lake Macquarie',lat:-33.02,lon:151.62},{n:'Maitland 20 km',lat:-32.733,lon:151.557},{n:'Cessnock 20 km',lat:-32.833,lon:151.356},{n:'Watagans',lat:-33.01,lon:151.40},{n:'Ocean',lat:-32.95,lon:151.80}].map(p=>Object.assign(p,toXZ(p.lat,p.lon)));
+// --- state and controls
+let snowOn=false,fly=false,yaw=Math.PI*0.8,pitch=-0.05,keys={},sunset=false;
+const pos=new THREE.Vector3(CP.x,0,CP.z);
+function tp(p){pos.set(p.x+8,0,p.z+8);const dx=S.x-pos.x,dz=S.z-pos.z;if(Math.hypot(dx,dz)>60){yaw=Math.atan2(-dx,-dz);}else{const n=FAR[0];yaw=Math.atan2(-(n.x-pos.x),-(n.z-pos.z));}pitch=fly?-0.2:-0.02;if(fly)pos.y=H(p.x,p.z)+60;showPoi(p);}
+function showPoi(p){const e=document.getElementById('poi');e.style.display='block';document.getElementById('poiT').textContent=p.n;document.getElementById('poiD').textContent=p.d+' Elevation about '+Math.round(H(p.x,p.z)/EXAG)+' m.';}
+const pb=document.getElementById('poiBtns');POI.forEach((p,i)=>{const b=document.createElement('button');b.textContent=p.n;b.className=i?'alt':'';b.onclick=()=>tp(p);pb.appendChild(b);});
+document.getElementById('mode').onclick=()=>{fly=!fly;document.getElementById('mode').textContent='Mode: '+(fly?'Fly':'Walk');if(fly)pos.y=H(pos.x,pos.z)+80;};
+document.getElementById('snow').onclick=()=>{snowOn=!snowOn;buildTerrain();};
+document.getElementById('tod').onclick=()=>{sunset=!sunset;const c=new THREE.Color(sunset?'#ffb38a':'#bfe3ff');scene.background=c;scene.fog.color=c;sun.color.set(sunset?0xffa070:0xfff2e0);sun.position.set(sunset?-4000:3000,sunset?900:4000,sunset?500:1500);document.getElementById('tod').textContent=sunset?'Daytime':'Sunset';};
+document.getElementById('exag').onclick=()=>{EXAG=EXAG===1?1.6:1;document.getElementById('exag').textContent='Height x'+EXAG;buildTerrain();};
+addEventListener('keydown',e=>{keys[e.key.toLowerCase()]=1;if(e.key.toLowerCase()==='f'&&!e.repeat)document.getElementById('mode').click();});addEventListener('keyup',e=>keys[e.key.toLowerCase()]=0);
+let drag=null;cv.addEventListener('pointerdown',e=>{drag=[e.clientX,e.clientY];cv.setPointerCapture(e.pointerId);});cv.addEventListener('pointermove',e=>{if(!drag)return;yaw-=(e.clientX-drag[0])*.005;pitch=Math.max(-1.4,Math.min(1.4,pitch-(e.clientY-drag[1])*.005));drag=[e.clientX,e.clientY];});cv.addEventListener('pointerup',()=>drag=null);
+const pad={};document.querySelectorAll('#pad button').forEach(b=>{const k=b.dataset.k;b.addEventListener('pointerdown',e=>{e.preventDefault();pad[k]=1;});['pointerup','pointerleave','pointercancel'].forEach(ev=>b.addEventListener(ev,()=>pad[k]=0));});
+// WebXR
+const vrb=document.getElementById('vr');
+if(navigator.xr&&navigator.xr.isSessionSupported){navigator.xr.isSessionSupported('immersive-vr').then(ok=>{if(ok){vrb.style.display='block';}}).catch(()=>{});}
+let xrSession=null;vrb.onclick=async()=>{if(xrSession){xrSession.end();return;}try{const s=await navigator.xr.requestSession('immersive-vr',{optionalFeatures:['local-floor']});xrSession=s;R.xr.setReferenceSpaceType('local-floor');await R.xr.setSession(s);vrb.textContent='Exit VR';s.addEventListener('end',()=>{xrSession=null;vrb.textContent='Enter VR';});}catch(e){alert('VR could not start on this device.');}};
+// minimap
+const mini=document.getElementById('mini'),mx=mini.getContext('2d');let miniBase=null;
+function drawMiniBase(){const c=document.createElement('canvas');c.width=c.height=340;const x=c.getContext('2d'),img=x.createImageData(340,340);for(let j=0;j<340;j++)for(let i=0;i<340;i++){const wx=(i/340-.5)*SIZE*2,wz=(j/340-.5)*SIZE*2,h=H(wx,wz)/EXAG,t=Math.min(1,(h-60)/360);const k=(j*340+i)*4;const band=Math.abs((h%40)-20)<1.2;img.data[k]=band?120:60+t*190;img.data[k+1]=band?60:110+t*90;img.data[k+2]=band?90:60+t*150;img.data[k+3]=255;}x.putImageData(img,0,0);
+ TRACKS.forEach(t=>{x.strokeStyle='#'+t.c.toString(16).padStart(6,'0');x.lineWidth=2;x.beginPath();t.line.forEach((p,i)=>{const a=(p.x/(SIZE*2)+.5)*340,b=(p.z/(SIZE*2)+.5)*340;i?x.lineTo(a,b):x.moveTo(a,b);});x.stroke();});
+ POI.forEach(p=>{x.fillStyle='#ff4fa3';x.beginPath();x.arc((p.x/(SIZE*2)+.5)*340,(p.z/(SIZE*2)+.5)*340,6,0,7);x.fill();});miniBase=c;}
+function drawMini(){if(!miniBase)return;mx.drawImage(miniBase,0,0);const a=(pos.x/(SIZE*2)+.5)*340,b=(pos.z/(SIZE*2)+.5)*340;mx.save();mx.translate(a,b);mx.rotate(-yaw);mx.fillStyle='#fff';mx.strokeStyle='#c2185b';mx.lineWidth=3;mx.beginPath();mx.moveTo(0,-12);mx.lineTo(8,8);mx.lineTo(-8,8);mx.closePath();mx.fill();mx.stroke();mx.restore();}
+// labels
+const lab=document.getElementById('lab');const tags=[...POI.map(p=>({p,far:false})),...FAR.map(p=>({p,far:true}))].map(o=>{const d=document.createElement('div');d.className='tag'+(o.far?' far':'');d.textContent=o.p.n;lab.appendChild(d);return Object.assign(o,{el:d});});
+function updateTags(){const w=cv.clientWidth,h=cv.clientHeight,v=new THREE.Vector3();tags.forEach(o=>{const y=o.far?600:H(o.p.x,o.p.z)+34;v.set(o.p.x,y,o.p.z).project(cam);const vis=v.z<1&&Math.abs(v.x)<1.1&&Math.abs(v.y)<1.1&&(o.far||Math.hypot(o.p.x-pos.x,o.p.z-pos.z)<3500);o.el.style.display=vis?'block':'none';if(vis){o.el.style.left=((v.x+1)/2*w)+'px';o.el.style.top=((1-v.y)/2*h)+'px';}});}
+// loop
+const clock=new THREE.Clock();let near=null;
+function resize(){const w=cv.clientWidth,h=cv.clientHeight;if(cv.width!==Math.floor(w*R.getPixelRatio())||cv.height!==Math.floor(h*R.getPixelRatio())){R.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix();}}
+function step(){const dt=Math.min(.05,clock.getDelta());if(!R.xr.isPresenting)resize();
+ let f=(keys['w']||keys['arrowup']||pad.f?1:0)-(keys['s']||keys['arrowdown']||pad.b?1:0),s=(keys['d']||keys['arrowright']||pad.r?1:0)-(keys['a']||keys['arrowleft']||pad.l?1:0),u=(keys['e']||pad.u?1:0)-(keys['q']||pad.d?1:0);
+ if(R.xr.isPresenting){const ss=R.xr.getSession();for(const src of ss.inputSources){const gp=src.gamepad;if(!gp||gp.axes.length<4)continue;const ax=gp.axes[2],ay=gp.axes[3];if(src.handedness==='left'){s+=Math.abs(ax)>.15?ax:0;f+=Math.abs(ay)>.15?-ay:0;}else{if(Math.abs(ax)>.2)yaw-=ax*dt*1.6;if(fly&&Math.abs(ay)>.2)u+=-ay;}}}
+ const sp=(fly?80:(keys['shift']?9:3.5))*dt*(R.xr.isPresenting?1:1);const fx=-Math.sin(yaw),fz=-Math.cos(yaw);pos.x+=(fx*f+Math.cos(yaw)*s)*sp*(fly?1:1);pos.z+=(fz*f-Math.sin(yaw)*s)*sp;
+ pos.x=Math.max(-SIZE*.98,Math.min(SIZE*.98,pos.x));pos.z=Math.max(-SIZE*.98,Math.min(SIZE*.98,pos.z));const g=H(pos.x,pos.z);
+ if(fly){pos.y=Math.max(g+3,Math.min(3000,pos.y+u*60*dt));}else pos.y=g;
+ rig.position.set(pos.x,pos.y+(R.xr.isPresenting?0:1.7),pos.z);rig.rotation.y=yaw;if(!R.xr.isPresenting)cam.rotation.set(pitch,0,0,'YXZ');
+ const ll=toLL(pos.x,pos.z);document.getElementById('pos').textContent=`${Math.abs(ll.lat).toFixed(4)} S, ${ll.lon.toFixed(4)} E, ground ${Math.round(g/EXAG)} m`;
+ let nn=null;POI.forEach(p=>{if(Math.hypot(p.x-pos.x,p.z-pos.z)<45)nn=p;});if(nn&&nn!==near)showPoi(nn);near=nn;
+ drawMini();if(!R.xr.isPresenting)updateTags();R.render(scene,cam);}
+buildTerrain();drawMiniBase();tp(CP);R.setAnimationLoop(step);
+window.CB_state=()=>({x:pos.x,z:pos.z,h:H(pos.x,pos.z),summit:H(S.x,S.z),pois:POI.length,tracks:TRACKS.length,trees:trees.count});
+window.CB_tp=i=>tp(POI[i]);
+</script></body></html>
