@@ -1,8 +1,8 @@
-/* Coffeebreak free demo limits. The full version is $5 on itch.io. */
+/* Coffeebreak free demo limits. The full version is $10 on itch.io. */
 (function(){
 if(window.__cbdemo)return;window.__cbdemo=1;window.CB_DEMO=true;
 var me=document.currentScript,ds=(me&&me.dataset)||{},URL_=ds.url||'https://coffeebreaks.itch.io',MODE=ds.mode||'app',PLAYS=+ds.plays||3,MINS=+ds.minutes||0;
-var NOTE='Free demo. Full version $5 on itch.io';var BARTXT=ds.nosave==='1'?'Free demo: nothing is kept after you leave. Full version $5 on itch.io':NOTE;
+var NOTE='Free demo. Full version $10 on itch.io';var BARTXT=ds.nosave==='1'?'Free demo: nothing is kept after you leave. Full version $10 on itch.io':NOTE;
 /* 1. Nothing is kept: storage lives in memory for this visit only */
 if(ds.nosave==='1'){try{var mem={},M={getItem:function(k){k=String(k);return Object.prototype.hasOwnProperty.call(mem,k)?mem[k]:null},setItem:function(k,v){mem[String(k)]=String(v)},removeItem:function(k){delete mem[String(k)]},clear:function(){mem={}},key:function(i){return Object.keys(mem)[i]||null}};Object.defineProperty(M,'length',{get:function(){return Object.keys(mem).length}});Object.defineProperty(window,'localStorage',{configurable:true,get:function(){return M}})}catch(e){}}
 function inert(el){return !!(el&&el.closest&&el.closest('[data-cbs-inert],#cbr-panel,#cbr-btn,[id^="cbp-"],#cbdemo-bar,#cbdemo-toast,#cbdemo-over,#cbdn-ov,#cbdn-btn,#cbassist-root,#cbassist-panel'))}
