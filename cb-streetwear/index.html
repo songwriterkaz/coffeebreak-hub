@@ -1,0 +1,48 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CB Streetwear by Coffeebreak</title><link rel="icon" href="cb-mark.png">
+<style>
+:root{--p:#ff3fa4;--bg:#0f0f12;--card:#1b1b20;--t:#f5f5f7;--m:#a9a9b3}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--t)}
+header{position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:#0f0f12ee;border-bottom:1px solid #2a2a30}
+header img{height:34px}.cartbtn{background:var(--p);color:#fff;border:0;border-radius:20px;padding:9px 16px;font-weight:700;font-size:15px}
+.hero{text-align:center;padding:36px 16px 20px}.hero img{width:min(220px,55vw)}.hero h1{margin:12px 0 6px;font-size:clamp(26px,6vw,44px)}.hero p{color:var(--m);margin:0}
+.cats{display:flex;gap:8px;overflow-x:auto;padding:10px 16px}.cats button{flex:none;background:var(--card);color:var(--t);border:1px solid #333;border-radius:18px;padding:8px 14px}.cats button.on{background:var(--p);border-color:var(--p)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;padding:12px 16px;max-width:1200px;margin:auto}
+@media(min-width:900px){.grid{grid-template-columns:repeat(4,1fr);gap:18px}}
+.card{background:var(--card);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}.card img{width:100%;aspect-ratio:1;display:block}
+.card .b{padding:10px;display:flex;flex-direction:column;gap:7px;flex:1}.card h3{font-size:15px;margin:0}.price{color:var(--p);font-weight:800}
+select{width:100%;padding:7px;border-radius:8px;background:#26262c;color:var(--t);border:1px solid #3a3a42}
+.add{margin-top:auto;background:var(--p);color:#fff;border:0;border-radius:10px;padding:10px;font-weight:700}
+#cart{position:fixed;inset:0;background:#000a;display:none;z-index:9}#cart .pan{position:absolute;right:0;top:0;bottom:0;width:min(420px,100%);background:#16161a;padding:18px;overflow:auto}
+.line{display:flex;justify-content:space-between;gap:8px;padding:8px 0;border-bottom:1px solid #2a2a30;font-size:14px}.line button{background:none;border:0;color:var(--m)}
+.pay{background:#26101c;border:1px solid var(--p);border-radius:12px;padding:12px;margin:14px 0}.pay b{color:var(--p)}
+input,textarea{width:100%;padding:9px;margin:4px 0;border-radius:8px;border:1px solid #3a3a42;background:#26262c;color:var(--t)}
+footer{padding:26px 16px 40px;color:var(--m);font-size:13px;max-width:900px;margin:auto;text-align:center}footer a{color:var(--p)}
+</style></head><body>
+<header><img src="cb-mark.png" alt="CB"><button class="cartbtn" onclick="openCart()">Cart (<span id="n">0</span>)</button></header>
+<section class="hero"><img src="cb-mark.png" alt="CB logo"><h1>CB Streetwear</h1><p>Coffeebreak streetwear from Newcastle NSW. Prices in AUD include delivery within Australia.</p></section>
+<nav class="cats" id="cats"></nav><main class="grid" id="grid"></main>
+<div id="cart" onclick="if(event.target===this)this.style.display='none'"><div class="pan"><h2>Your cart</h2><div id="lines"></div><p><b>Total: AUD $<span id="tot">0.00</span></b></p>
+<div class="pay"><b>Pay by PayID (Teachers Mutual Bank): darkokaz@gmx.com</b><p style="margin:8px 0 0;font-size:14px">Use your order number as the payment reference. Your order is made and posted once payment arrives.</p><p style="font-size:14px">Order number: <b id="ord"></b></p></div>
+<input id="nm" placeholder="Name"><input id="em" type="email" placeholder="Email"><textarea id="ad" rows="3" placeholder="Postal address"></textarea>
+<button class="add" style="width:100%" onclick="sendOrder()">Email my order to Coffeebreak</button><button class="cartbtn" style="width:100%;margin-top:8px;background:#333" onclick="document.getElementById('cart').style.display='none'">Keep shopping</button></div></div>
+<footer><img src="cb-mark.png" alt="CB" style="height:40px"><p>&copy; Karen O'Brien (Coffeebreak). Karen keeps all rights to her products, designs, name and logo. Buyers may resell the physical items they bought but may not copy them. Third-party brands belong to their owners.</p>
+<p><a href="https://coffeebreaks.itch.io" target="_blank" rel="noopener">coffeebreaks.itch.io</a></p>
+<p><a href="https://www.tesla.com" target="_blank" rel="noopener">Tesla</a> · <a href="https://www.starlink.com" target="_blank" rel="noopener">Starlink</a></p></footer>
+<script>
+const COL=[["grey-marle","Grey Marle"],["black","Black"],["charcoal","Charcoal"],["navy","Navy"],["white","White"]];
+const P=[["oversized-tee","Oversized Tee","Tees",52.05,5],["hoodie","Heavyweight Hoodie","Hoodies",61.05,5],["zip-hoodie","Zip-Up Hoodie","Hoodies",81.05,5],["trackies","Gangster Trackies (Track Pants)","Trackies",71.05,5],["tracksuit-set","Tracksuit Set (Hoodie + Trackies)","Sets",113.05,5],["beanie","Embroidered Beanie","Hats",43.05,4],["cap","Snapback Cap","Hats",51.05,4],["bucket-hat","Bucket Hat","Hats",49.05,4]];
+const DES=["Pink CB logo","\"Coffeebreak\" in pink","\"Coffeebreak TV Series\" in pink"];
+let cat="All",cart=JSON.parse(localStorage.cbsw||"[]");const ord="CB"+Date.now().toString().slice(-6);document.getElementById('ord').textContent=ord;
+function render(){const cats=["All",...new Set(P.map(p=>p[2]))];document.getElementById('cats').innerHTML=cats.map(c=>`<button class="${c==cat?'on':''}" onclick="cat='${c}';render()">${c}</button>`).join('');
+document.getElementById('grid').innerHTML=P.filter(p=>cat=="All"||p[2]==cat).map((p,i)=>{const k=P.indexOf(p),cols=COL.slice(0,p[4]);const hat=p[2]=="Hats";
+return `<div class="card"><img id="im${k}" src="img/${p[0]}-black.jpg" alt="CB ${p[1]}" loading="lazy"><div class="b"><h3>CB ${p[1]}</h3><span class="price">AUD $${p[3].toFixed(2)}</span>
+<select id="c${k}" onchange="document.getElementById('im${k}').src='img/${p[0]}-'+this.value+'.jpg'">${cols.map(c=>`<option value="${c[0]}" ${c[0]=='black'?'selected':''}>${c[1]}</option>`).join('')}</select>
+${hat?`<input type="hidden" id="s${k}" value="One size">`:`<select id="s${k}">${["S","M","L","XL","2XL"].map(s=>`<option>${s}</option>`).join('')}</select>`}
+<select id="d${k}">${DES.map(d=>`<option>${d}</option>`).join('')}</select><button class="add" onclick="add(${k})">Add to cart</button></div></div>`}).join('');upd()}
+function add(k){const p=P[k],c=document.getElementById('c'+k),s=document.getElementById('s'+k).value,d=document.getElementById('d'+k).value;cart.push({t:`CB ${p[1]} (${c.options[c.selectedIndex].text}, ${s}) – ${d}`,p:p[3]});upd();openCart()}
+function upd(){localStorage.cbsw=JSON.stringify(cart);document.getElementById('n').textContent=cart.length;document.getElementById('lines').innerHTML=cart.length?cart.map((l,i)=>`<div class="line"><span>${l.t}</span><span>$${l.p.toFixed(2)} <button onclick="cart.splice(${i},1);upd()">Remove</button></span></div>`).join(''):'<p>Your cart is empty.</p>';document.getElementById('tot').textContent=cart.reduce((a,l)=>a+l.p,0).toFixed(2)}
+function openCart(){document.getElementById('cart').style.display='block'}
+function sendOrder(){if(!cart.length)return;const b=`Order ${ord}\n\n${cart.map(l=>l.t+'  AUD $'+l.p.toFixed(2)).join('\n')}\n\nTotal: AUD $${document.getElementById('tot').textContent}\nPaid by PayID (Teachers Mutual Bank): darkokaz@gmx.com\n\nName: ${nm.value}\nEmail: ${em.value}\nAddress: ${ad.value}`;location.href='mailto:darkokaz@gmx.com?subject='+encodeURIComponent('CB Streetwear order '+ord)+'&body='+encodeURIComponent(b)}
+render();
+</script></body></html>
